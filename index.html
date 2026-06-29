@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Train Your Team with LBCC | Workforce Development</title>
+<meta name="description" content="Long Beach City College designs short, customizable training for local employers — with AI upskilling as the flagship. Tell us what your team needs." />
+
+<!-- ============================================================= -->
+<!--  CONFIG — set this once before you publish                      -->
+<!--  endpoint: paste your Google Apps Script Web App URL OR a       -->
+<!--            Formspree endpoint. Leave "" to run in demo mode.    -->
+<!--  mode:     "apps_script"  (Google Sheet)  |  "formspree"        -->
+<!-- ============================================================= -->
+<script>
+  window.LBCC_CONFIG = {
+    endpoint: "",          // e.g. "https://script.google.com/macros/s/AKfycb.../exec"
+    mode: "apps_script",   // "apps_script" | "formspree"
+    notifyName: "LBCC Workforce Development"
+  };
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+  :root{
+    --navy:#003366;
+    --ink:#0B1F33;
+    --gold:#FFB81C;
+    --gold-deep:#E0A012;
+    --cream:#FAFAF7;
+    --paper:#ffffff;
+    --slate:#5A6B7B;
+    --teal:#0F6E56;
+    --line:#E4E2DA;
+    --shadow:0 1px 2px rgba(11,31,51,.06), 0 8px 24px rgba(11,31,51,.08);
+    --shadow-lg:0 24px 60px rgba(11,31,51,.16);
+    --r:14px;
+    --maxw:1140px;
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:"Inter",system-ui,-apple-system,sans-serif;
+    color:var(--ink);
+    background:var(--cream);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:"Space Grotesk",sans-serif;line-height:1.1;letter-spacing:-.02em;margin:0}
+  p{margin:0}
+  a{color:var(--navy)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .eyebrow{
+    font-family:"Inter";font-size:.78rem;font-weight:600;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--teal);
+  }
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    background:rgba(250,250,247,.85);backdrop-filter:saturate(180%) blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{display:flex;align-items:center;gap:12px;font-family:"Space Grotesk";font-weight:700;color:var(--navy);text-decoration:none;font-size:1.02rem}
+  .brand .mark{
+    width:34px;height:34px;border-radius:9px;flex:0 0 auto;
+    background:var(--navy);color:var(--gold);display:grid;place-items:center;
+    font-weight:700;font-size:.95rem;letter-spacing:-.04em;
+  }
+  .brand small{display:block;font-family:"Inter";font-weight:500;color:var(--slate);font-size:.72rem;letter-spacing:.02em}
+  .nav-cta{
+    font-family:"Inter";font-weight:600;font-size:.92rem;text-decoration:none;
+    background:var(--gold);color:var(--ink);padding:10px 18px;border-radius:999px;
+    transition:transform .15s ease, box-shadow .15s ease;white-space:nowrap;
+  }
+  .nav-cta:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(224,160,18,.4)}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;overflow:hidden;background:var(--ink);color:#fff}
+  .hero::before{
+    content:"";position:absolute;inset:0;opacity:.5;
+    background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+    background-size:46px 46px;
+    -webkit-mask-image:radial-gradient(ellipse 80% 70% at 70% 20%,#000,transparent);
+            mask-image:radial-gradient(ellipse 80% 70% at 70% 20%,#000,transparent);
+  }
+  .hero::after{
+    content:"";position:absolute;right:-180px;top:-120px;width:520px;height:520px;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,184,28,.22),transparent 60%);filter:blur(8px);
+  }
+  .hero .wrap{position:relative;padding:78px 24px 86px}
+  .hero-grid{display:grid;grid-template-columns:1.25fr .9fr;gap:48px;align-items:center}
+  .hero h1{font-size:clamp(2.1rem,4.6vw,3.5rem);font-weight:700;color:#fff;margin:18px 0 0}
+  .hero h1 .hl{color:var(--gold)}
+  .hero .lede{margin-top:20px;font-size:1.12rem;color:#cdd6df;max-width:46ch}
+  .hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px}
+  .btn{
+    font-family:"Inter";font-weight:600;font-size:1rem;text-decoration:none;cursor:pointer;border:0;
+    padding:14px 26px;border-radius:999px;display:inline-flex;align-items:center;gap:9px;
+    transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .btn-gold{background:var(--gold);color:var(--ink)}
+  .btn-gold:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(255,184,28,.38)}
+  .btn-ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.32)}
+  .btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.06)}
+  .hero-card{
+    background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);
+    border-radius:18px;padding:26px;backdrop-filter:blur(6px);
+  }
+  .hero-card .eyebrow{color:var(--gold)}
+  .hero-card h3{color:#fff;font-size:1.18rem;margin:10px 0 14px}
+  .hero-card ul{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+  .hero-card li{display:flex;gap:11px;font-size:.96rem;color:#dbe3ea}
+  .hero-card li b{color:#fff;font-weight:600}
+  .tick{color:var(--gold);flex:0 0 auto;margin-top:3px}
+
+  /* ---------- value strip ---------- */
+  .values{background:var(--navy);color:#fff;padding:6px 0}
+  .values .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+  .value{padding:26px 22px;border-left:1px solid rgba(255,255,255,.12)}
+  .value:first-child{border-left:0}
+  .value h4{font-family:"Space Grotesk";font-size:1.02rem;font-weight:600;margin:0 0 6px;color:var(--gold)}
+  .value p{font-size:.9rem;color:#c4d0db}
+
+  /* ---------- generic section ---------- */
+  section{padding:78px 0}
+  .section-head{max-width:60ch;margin-bottom:40px}
+  .section-head h2{font-size:clamp(1.7rem,3vw,2.4rem);color:var(--navy);margin:12px 0 0}
+  .section-head p{margin-top:14px;color:var(--slate);font-size:1.06rem}
+
+  /* ---------- featured AI band ---------- */
+  .ai-band{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .flag{
+    display:inline-flex;align-items:center;gap:8px;background:#FFF4D6;color:var(--gold-deep);
+    border:1px solid #FCE6AE;font-weight:600;font-size:.78rem;letter-spacing:.04em;
+    padding:6px 13px;border-radius:999px;text-transform:uppercase;
+  }
+  .card-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .wcard{
+    background:var(--cream);border:1px solid var(--line);border-radius:var(--r);
+    padding:22px 20px;display:flex;flex-direction:column;gap:8px;
+    transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+  }
+  .wcard:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:#d6d3c8}
+  .wcard .num{font-family:"Space Grotesk";font-weight:700;color:var(--teal);font-size:.82rem;letter-spacing:.04em}
+  .wcard h3{font-size:1.06rem;color:var(--navy);line-height:1.18}
+  .wcard p{font-size:.9rem;color:var(--slate);flex:1}
+  .wcard .len{font-size:.8rem;font-weight:600;color:var(--ink);background:#fff;border:1px solid var(--line);align-self:flex-start;padding:4px 10px;border-radius:999px}
+  .ai-note{
+    margin-top:26px;padding:18px 22px;border-left:3px solid var(--gold);
+    background:#FFFCF3;border-radius:0 10px 10px 0;font-size:.96rem;color:var(--ink);
+  }
+
+  /* ---------- broader catalog ---------- */
+  .pill-grid{display:flex;flex-wrap:wrap;gap:12px}
+  .pill{
+    background:var(--paper);border:1px solid var(--line);border-radius:12px;
+    padding:16px 18px;display:flex;align-items:center;gap:12px;font-weight:500;
+    font-size:.98rem;color:var(--ink);flex:1 1 280px;
+  }
+  .pill .dot{width:9px;height:9px;border-radius:50%;background:var(--teal);flex:0 0 auto}
+  .pill small{display:block;color:var(--slate);font-weight:400;font-size:.84rem}
+
+  /* ---------- how it works ---------- */
+  .how{background:var(--ink);color:#fff}
+  .how .section-head h2{color:#fff}
+  .how .section-head p{color:#aeb9c4}
+  .how .section-head .eyebrow{color:var(--gold)}
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;counter-reset:step}
+  .step{position:relative;padding:24px 20px;border:1px solid rgba(255,255,255,.14);border-radius:var(--r);background:rgba(255,255,255,.04)}
+  .step .stepnum{font-family:"Space Grotesk";font-weight:700;font-size:1.5rem;color:var(--gold)}
+  .step h3{font-size:1.06rem;color:#fff;margin:10px 0 8px}
+  .step p{font-size:.9rem;color:#bcc6d0}
+
+  /* ---------- form ---------- */
+  .form-section{background:var(--cream)}
+  .form-shell{
+    background:var(--paper);border:1px solid var(--line);border-radius:20px;
+    box-shadow:var(--shadow);overflow:hidden;
+  }
+  .form-top{background:var(--navy);color:#fff;padding:30px 34px}
+  .form-top .eyebrow{color:var(--gold)}
+  .form-top h2{color:#fff;font-size:1.7rem;margin:8px 0 6px}
+  .form-top p{color:#c4d0db;font-size:.98rem;max-width:62ch}
+  form{padding:34px}
+  fieldset{border:0;margin:0 0 8px;padding:0 0 28px;border-bottom:1px solid var(--line)}
+  fieldset:last-of-type{border-bottom:0;padding-bottom:6px}
+  legend{
+    font-family:"Space Grotesk";font-weight:600;font-size:1.16rem;color:var(--navy);
+    padding:0;margin-bottom:4px;display:flex;align-items:baseline;gap:10px;
+  }
+  legend .lg-num{color:var(--gold-deep);font-size:.9rem;font-weight:700}
+  .legend-sub{color:var(--slate);font-size:.92rem;margin:2px 0 20px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+  .field{display:flex;flex-direction:column;gap:7px;margin-bottom:18px}
+  .field:last-child{margin-bottom:0}
+  label{font-weight:600;font-size:.92rem;color:var(--ink)}
+  label .req{color:#C0392B;font-weight:700}
+  input[type=text],input[type=email],input[type=tel],select,textarea{
+    font-family:"Inter";font-size:.98rem;color:var(--ink);background:#fff;
+    border:1.5px solid var(--line);border-radius:10px;padding:12px 14px;width:100%;
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  input:focus,select:focus,textarea:focus{outline:0;border-color:var(--navy);box-shadow:0 0 0 3px rgba(0,51,102,.12)}
+  textarea{resize:vertical;min-height:92px}
+  .help{font-size:.82rem;color:var(--slate)}
+  .checks{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .check{
+    display:flex;align-items:flex-start;gap:10px;border:1.5px solid var(--line);
+    border-radius:10px;padding:11px 13px;cursor:pointer;font-size:.92rem;
+    transition:border-color .14s ease, background .14s ease;user-select:none;
+  }
+  .check:hover{border-color:#c9c6ba;background:#fcfbf7}
+  .check input{margin-top:2px;accent-color:var(--navy);width:17px;height:17px;flex:0 0 auto}
+  .check.sel{border-color:var(--navy);background:#F3F7FB}
+  .scale{display:flex;flex-wrap:wrap;gap:8px}
+  .scale label{
+    flex:1 1 90px;text-align:center;border:1.5px solid var(--line);border-radius:10px;
+    padding:11px 8px;cursor:pointer;font-weight:500;font-size:.88rem;transition:all .14s ease;
+  }
+  .scale input{position:absolute;opacity:0;pointer-events:none}
+  .scale label:hover{border-color:#c9c6ba}
+  .scale input:checked + span{color:var(--navy)}
+  .scale label:has(input:checked){border-color:var(--navy);background:#F3F7FB;color:var(--navy);font-weight:600}
+  .form-actions{margin-top:30px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .submit-btn{
+    font-family:"Inter";font-weight:600;font-size:1.04rem;border:0;cursor:pointer;
+    background:var(--gold);color:var(--ink);padding:15px 34px;border-radius:999px;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .submit-btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(255,184,28,.4)}
+  .submit-btn:disabled{opacity:.6;cursor:wait;transform:none;box-shadow:none}
+  .privacy{font-size:.84rem;color:var(--slate);max-width:46ch}
+
+  .formmsg{display:none;padding:18px 20px;border-radius:12px;margin-top:20px;font-size:.96rem}
+  .formmsg.ok{display:block;background:#EAF6EF;border:1px solid #BFE3CD;color:#1d6b43}
+  .formmsg.err{display:block;background:#FCEDEC;border:1px solid #F2C7C3;color:#9B2C22}
+  .formmsg.demo{display:block;background:#FFF7E2;border:1px solid #F3DFA6;color:#8a6400}
+
+  .success-screen{display:none;padding:60px 34px;text-align:center}
+  .success-screen.show{display:block}
+  .success-screen .ic{width:64px;height:64px;border-radius:50%;background:#EAF6EF;color:var(--teal);display:grid;place-items:center;margin:0 auto 18px}
+  .success-screen h2{color:var(--navy);font-size:1.7rem}
+  .success-screen p{color:var(--slate);margin-top:12px;max-width:48ch;margin-left:auto;margin-right:auto}
+
+  /* ---------- footer ---------- */
+  footer{background:var(--navy);color:#cdd6df;padding:54px 0 38px}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
+  footer h4{font-family:"Space Grotesk";color:#fff;font-size:1.05rem;margin:0 0 14px}
+  footer a{color:#cdd6df;text-decoration:none}
+  footer a:hover{color:var(--gold)}
+  .foot-links{display:grid;gap:9px;font-size:.94rem}
+  .foot-brand p{font-size:.94rem;margin-top:12px;color:#aeb9c4;max-width:42ch}
+  .foot-bottom{border-top:1px solid rgba(255,255,255,.12);margin-top:36px;padding-top:22px;font-size:.84rem;color:#92a0ad;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:980px){
+    .hero-grid{grid-template-columns:1fr;gap:32px}
+    .values .wrap{grid-template-columns:1fr 1fr}
+    .value:nth-child(3){border-left:0}
+    .card-grid{grid-template-columns:1fr 1fr}
+    .steps{grid-template-columns:1fr 1fr}
+  }
+  @media (max-width:620px){
+    .hero .wrap{padding:54px 24px 60px}
+    .values .wrap{grid-template-columns:1fr}
+    .value{border-left:0;border-top:1px solid rgba(255,255,255,.12)}
+    .value:first-child{border-top:0}
+    .card-grid{grid-template-columns:1fr}
+    .steps{grid-template-columns:1fr}
+    .grid2,.grid3{grid-template-columns:1fr}
+    .checks{grid-template-columns:1fr}
+    form{padding:24px 20px}
+    .form-top{padding:24px 22px}
+    .foot-grid{grid-template-columns:1fr}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{scroll-behavior:auto}
+    .reveal{opacity:1;transform:none;transition:none}
+    .btn,.wcard,.nav-cta,.submit-btn{transition:none}
+  }
+
+  /* ===================== DOOR / ENTRANCE (scroll-driven) ===================== */
+  html{scroll-padding-top:72px}
+
+  .skip-to-content{position:absolute;left:-9999px;top:0;z-index:200;background:var(--navy);color:#fff;
+    padding:12px 18px;border-radius:0 0 10px 0;font-weight:600;text-decoration:none}
+  .skip-to-content:focus{left:0}
+
+  /* nav bar stays out of sight until the visitor is "inside" */
+  .topbar{position:fixed;left:0;right:0;transition:transform .45s ease}
+  body:not(.entered) .topbar{transform:translateY(-110%)}
+
+  .doorstage{--open:0;--push:0;position:relative;z-index:40;height:260vh;background:var(--ink)}
+  .doorstage-sticky{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:grid;place-items:center;
+    background:radial-gradient(ellipse 70% 60% at 50% 44%, rgba(255,184,28,.16), transparent 58%), var(--ink)}
+
+  .zoom{transform:scale(calc(1 + var(--push)*2.6));opacity:calc(1 - var(--push));will-change:transform,opacity}
+  .stage3d{perspective:1500px;perspective-origin:50% 46%}
+  .scene{position:relative;width:min(540px,84vw);height:min(660px,76svh);transform-style:preserve-3d}
+
+  /* interior glow seen through the doorway */
+  .vestibule{position:absolute;inset:78px 4% 0 4%;transform:translateZ(-240px);
+    opacity:calc(.18 + var(--open)*.82);overflow:hidden;border-radius:4px}
+  .v-glow{position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 70%,
+    rgba(255,205,110,.55), rgba(255,184,28,.12) 45%, transparent 70%)}
+  .v-floor{position:absolute;left:0;right:0;bottom:0;height:42%;
+    background:linear-gradient(to top, rgba(255,210,120,.40), transparent);
+    transform:perspective(300px) rotateX(58deg);transform-origin:bottom}
+
+  /* lintel sign */
+  .lintel{position:absolute;top:0;left:50%;transform:translateX(-50%);width:90%;height:64px;
+    background:linear-gradient(180deg,#0d2747,var(--navy));border:2px solid rgba(255,184,28,.5);
+    border-radius:8px;display:flex;align-items:center;gap:12px;padding:0 16px;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+  .lintel-mark{width:36px;height:36px;border-radius:8px;background:var(--gold);color:var(--navy);
+    display:grid;place-items:center;font-family:"Space Grotesk";font-weight:700;font-size:.95rem;flex:0 0 auto}
+  .lintel-text{font-family:"Space Grotesk";font-weight:600;color:#fff;font-size:.92rem;line-height:1.15}
+  .lintel-text small{display:block;font-family:"Inter";font-weight:500;color:var(--gold);font-size:.64rem;letter-spacing:.04em}
+
+  /* door frame + leaves */
+  .doorframe{position:absolute;left:0;right:0;top:80px;bottom:0;border:6px solid var(--navy);border-bottom:0;
+    border-radius:8px 8px 0 0;background:linear-gradient(180deg,#06121f,#0a1c30);
+    transform-style:preserve-3d;box-shadow:inset 0 0 60px rgba(0,0,0,.6)}
+  .leaf{position:absolute;top:0;bottom:0;width:50%;overflow:hidden;
+    background:linear-gradient(180deg,#2a3c4f,#1b2a3a);box-shadow:0 18px 40px rgba(0,0,0,.45)}
+  .leaf-left{left:0;transform-origin:left center;transform:rotateY(calc(var(--open)*-112deg))}
+  .leaf-right{right:0;transform-origin:right center;transform:rotateY(calc(var(--open)*112deg))}
+  .glass{position:absolute;inset:14px 12px;border-radius:3px;border:1px solid rgba(255,255,255,.10);
+    background:linear-gradient(135deg, rgba(180,210,235,.22), rgba(120,150,180,.10) 40%, rgba(255,255,255,.05))}
+  .rail{position:absolute;left:8px;right:8px;height:10px;border-radius:2px;opacity:.85;
+    background:linear-gradient(180deg,var(--gold),var(--gold-deep))}
+  .rail-top{top:34%}
+  .rail-bottom{top:62%}
+  .handle{position:absolute;top:34%;bottom:30%;width:6px;border-radius:3px;
+    background:linear-gradient(180deg,#f6f6f2,#b9bdc2);box-shadow:0 0 6px rgba(0,0,0,.4)}
+  .leaf-left .handle{right:14px}
+  .leaf-right .handle{left:14px}
+  .etch{position:absolute;top:20%;left:0;right:0;text-align:center;font-family:"Space Grotesk";
+    font-weight:600;letter-spacing:.16em;font-size:.7rem;color:rgba(230,240,250,.7);opacity:calc(1 - var(--open))}
+
+  /* prompts */
+  .enter-hint{position:absolute;left:0;right:0;bottom:34px;text-align:center;color:#cdd6df;font-weight:500;
+    font-size:.95rem;opacity:calc(1 - var(--open));display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none}
+  .enter-hint .chev{font-size:1.3rem;color:var(--gold);animation:bob 1.6s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+  .enter-skip{position:absolute;top:18px;right:18px;z-index:5;background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.25);color:#fff;font-family:"Inter";font-weight:600;font-size:.85rem;
+    padding:9px 16px;border-radius:999px;cursor:pointer;transition:background .15s ease}
+  .enter-skip:hover{background:rgba(255,255,255,.16)}
+  .enter-skip:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+  @media (max-width:620px){
+    .doorstage{height:220vh}
+    .zoom{transform:scale(calc(1 + var(--push)*2.1))}
+    .scene{height:min(560px,70svh)}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .doorstage{height:auto}
+    .doorstage-sticky{position:relative;height:auto;min-height:64vh;padding:48px 0}
+    .zoom{transform:none;opacity:1}
+    .leaf-left{transform:rotateY(-104deg)}
+    .leaf-right{transform:rotateY(104deg)}
+    .vestibule{opacity:1}
+    .etch{opacity:0}
+    .enter-hint{opacity:1}
+    .enter-hint .chev{animation:none}
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-to-content" href="#top">Skip to main content</a>
+
+<!-- ===================== TOP BAR ===================== -->
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top">
+      <span class="mark">LB</span>
+      <span>Long Beach City College
+        <small>Workforce &amp; Economic Development</small>
+      </span>
+    </a>
+    <a class="nav-cta" href="#intake">Tell us what you need</a>
+  </div>
+</header>
+
+<!-- ===================== DOOR / ENTRANCE (scroll-driven) ===================== -->
+<section class="doorstage" id="entrance">
+  <div class="doorstage-sticky">
+    <button type="button" class="enter-skip" id="enterSkip">Skip intro &rarr;</button>
+    <div class="zoom" id="zoom" aria-hidden="true">
+      <div class="stage3d">
+        <div class="scene">
+          <div class="vestibule">
+            <div class="v-glow"></div>
+            <div class="v-floor"></div>
+          </div>
+          <div class="lintel">
+            <span class="lintel-mark">LB</span>
+            <span class="lintel-text">Long Beach City College<small>Workforce &amp; Economic Development</small></span>
+          </div>
+          <div class="doorframe">
+            <div class="leaf leaf-left">
+              <span class="glass"></span>
+              <span class="rail rail-top"></span>
+              <span class="rail rail-bottom"></span>
+              <span class="handle"></span>
+              <span class="etch">WORKFORCE</span>
+            </div>
+            <div class="leaf leaf-right">
+              <span class="glass"></span>
+              <span class="rail rail-top"></span>
+              <span class="rail rail-bottom"></span>
+              <span class="handle"></span>
+              <span class="etch">DEVELOPMENT</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="enter-hint" id="enterHint" aria-hidden="true">
+      <span>Scroll to step inside</span>
+      <span class="chev">&darr;</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow">For Long Beach &amp; Harbor-Region Employers</span>
+        <h1>The question isn't whether AI is coming to your workplace. It's whether <span class="hl">your team is ready.</span></h1>
+        <p class="lede">LBCC builds short, hands-on training around the skills your people actually need — on your schedule, at your site or ours. Tell us the gap, and we'll design the program.</p>
+        <div class="hero-actions">
+          <a class="btn btn-gold" href="#intake">Start the conversation</a>
+          <a class="btn btn-ghost" href="#ai-series">See what we can teach</a>
+        </div>
+      </div>
+      <aside class="hero-card">
+        <span class="eyebrow">What this is</span>
+        <h3>A 5-minute needs assessment</h3>
+        <ul>
+          <li><span class="tick">→</span><span>Takes <b>about 5 minutes</b> — no commitment, no cost to ask.</span></li>
+          <li><span class="tick">→</span><span>Goes straight to our <b>Workforce Development team</b>, who reply with options.</span></li>
+          <li><span class="tick">→</span><span>Programs can be delivered <b>at your workplace</b> or on campus.</span></li>
+          <li><span class="tick">→</span><span>Many qualify for <b>state training-cost offsets</b> (ETP / WIOA).</span></li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== VALUE STRIP ===================== -->
+<div class="values">
+  <div class="wrap">
+    <div class="value">
+      <h4>Built around you</h4>
+      <p>Every session is shaped to your tools, roles, and goals — not an off-the-shelf course.</p>
+    </div>
+    <div class="value">
+      <h4>Taught by experts</h4>
+      <p>LBCC faculty and industry practitioners who do this work, not just talk about it.</p>
+    </div>
+    <div class="value">
+      <h4>Where it works for you</h4>
+      <p>Your site, our campus, or live online — short workshops to multi-week series.</p>
+    </div>
+    <div class="value">
+      <h4>Often fundable</h4>
+      <p>Many programs qualify for Employment Training Panel and WIOA cost support.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== AI SERIES (FLAGSHIP) ===================== -->
+<section class="ai-band" id="ai-series">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="flag">★ Flagship offering</span>
+      <h2 style="margin-top:14px">AI Upskilling for Working Teams</h2>
+      <p>Practical, no-hype sessions that get your staff using AI safely and well — built from LBCC's A.S. in AI for Digital Transformation, the first dedicated AI degree in the California Community College system, and rebuilt as short modules for working professionals.</p>
+    </div>
+
+    <div class="card-grid">
+      <div class="wcard reveal"><span class="num">01</span><h3>AI Foundations for the Workplace</h3><p>What generative AI is, what it isn't, and how to put it to work without putting your data at risk.</p><span class="len">2 hours</span></div>
+      <div class="wcard reveal"><span class="num">02</span><h3>Prompt Literacy</h3><p>Getting reliable, useful results from the AI tools your team may already have access to.</p><span class="len">Half day</span></div>
+      <div class="wcard reveal"><span class="num">03</span><h3>Evaluating AI Output</h3><p>Spotting errors, bias, and made-up answers before they ever reach a customer or a decision.</p><span class="len">2 hours</span></div>
+      <div class="wcard reveal"><span class="num">04</span><h3>AI for Business Communication</h3><p>Faster emails, reports, and proposals — without losing your team's voice or judgment.</p><span class="len">Half day</span></div>
+      <div class="wcard reveal"><span class="num">05</span><h3>AI for Data &amp; Decisions</h3><p>No-code analysis, document summarizing, and turning everyday data into action.</p><span class="len">Half day</span></div>
+      <div class="wcard reveal"><span class="num">06</span><h3>AI Ethics, Policy &amp; Governance</h3><p>Responsible use, privacy, and what your organization should actually put in writing.</p><span class="len">2 hours</span></div>
+      <div class="wcard reveal"><span class="num">07</span><h3>Build Your Team's AI Use Policy</h3><p>A facilitated working session that ends with a draft policy you can adopt.</p><span class="len">Half day</span></div>
+      <div class="wcard reveal"><span class="num">08</span><h3>Sector Deep-Dives</h3><p>AI applied to your field — logistics, healthcare operations, manufacturing, public service.</p><span class="len">Custom</span></div>
+    </div>
+
+    <div class="ai-note reveal">
+      <strong>We teach elements, not whole degrees.</strong> These workshops pull the most useful pieces of our college-credit AI courses and repackage them for busy teams — so a frontline group can get value in two hours, or a department can take a multi-week series. Mix and match to build your own track.
+    </div>
+  </div>
+</section>
+
+<!-- ===================== BROADER CATALOG ===================== -->
+<section>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Beyond AI</span>
+      <h2>Other training we can customize</h2>
+      <p>Drawn from LBCC's career and technical programs across our Liberal Arts and Trades, Technology &amp; Community Learning campuses. Any of these can be scoped down to a short workshop or built into a longer series.</p>
+    </div>
+    <div class="pill-grid">
+      <div class="pill reveal"><span class="dot"></span><span>Business &amp; Professional Communication<small>Writing, presenting, client-facing skills</small></span></div>
+      <div class="pill reveal"><span class="dot"></span><span>Leadership &amp; Supervisory Skills<small>New-manager and frontline-lead development</small></span></div>
+      <div class="pill reveal"><span class="dot"></span><span>Microsoft 365 &amp; Computer Applications<small>Excel, Outlook, productivity, automation</small></span></div>
+      <div class="pill reveal"><span class="dot"></span><span>Advanced Transportation &amp; EV Technology<small>Alternative fuels and electric vehicle systems</small></span></div>
+      <div class="pill reveal"><span class="dot"></span><span>Welding &amp; Metal Fabrication<small>Skills upgrade and certification refreshers</small></span></div>
+      <div class="pill reveal"><span class="dot"></span><span>Architectural &amp; Mechanical Drafting / CAD<small>Design and drafting fundamentals</small></span></div>
+      <div class="pill reveal"><span class="dot"></span><span>Logistics &amp; Supply Chain<small>Via the Port of Long Beach Maritime Center of Excellence</small></span></div>
+      <div class="pill reveal"><span class="dot"></span><span>Healthcare Support &amp; Patient-Care Skills<small>Soft skills and workflow readiness</small></span></div>
+      <div class="pill reveal"><span class="dot"></span><span>Customer Service &amp; Frontline Excellence<small>Service standards and de-escalation</small></span></div>
+      <div class="pill reveal"><span class="dot"></span><span>Sustainability &amp; Horticulture<small>Green-economy and grounds operations</small></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== HOW IT WORKS ===================== -->
+<section class="how">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Simple by design</span>
+      <h2>How it works</h2>
+      <p>From first conversation to trained team, usually in a few weeks.</p>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><div class="stepnum">01</div><h3>Tell us your needs</h3><p>Fill out the short form below. It takes about five minutes.</p></div>
+      <div class="step reveal"><div class="stepnum">02</div><h3>We design a proposal</h3><p>Our team scopes content, format, and timing — and shares a custom plan.</p></div>
+      <div class="step reveal"><div class="stepnum">03</div><h3>We deliver the training</h3><p>At your workplace, on our campus, or live online — whatever fits your team.</p></div>
+      <div class="step reveal"><div class="stepnum">04</div><h3>Credential &amp; funding</h3><p>Optional certificates or badges, plus help pursuing ETP / WIOA cost support.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== INTAKE FORM ===================== -->
+<section class="form-section" id="intake">
+  <div class="wrap">
+    <div class="form-shell reveal">
+      <div class="form-top">
+        <span class="eyebrow">Training needs assessment</span>
+        <h2>Tell us what your team needs</h2>
+        <p>The more you share, the sharper our recommendation. Only a few fields are required — answer what's relevant and skip the rest.</p>
+      </div>
+
+      <form id="intakeForm" novalidate>
+
+        <!-- 1. ORGANIZATION -->
+        <fieldset>
+          <legend><span class="lg-num">01</span> About your organization</legend>
+          <div class="grid2">
+            <div class="field">
+              <label for="org_name">Organization name <span class="req">*</span></label>
+              <input type="text" id="org_name" name="org_name" required />
+            </div>
+            <div class="field">
+              <label for="sector">Industry / sector <span class="req">*</span></label>
+              <select id="sector" name="sector" required>
+                <option value="">Select one…</option>
+                <option>Aerospace &amp; Advanced Manufacturing</option>
+                <option>Trade, Logistics &amp; Supply Chain (Port)</option>
+                <option>Healthcare &amp; Life Sciences</option>
+                <option>IT, Software &amp; Data</option>
+                <option>Energy, Sustainability &amp; Clean Tech</option>
+                <option>Construction &amp; Skilled Trades</option>
+                <option>Hospitality, Retail &amp; Tourism</option>
+                <option>Professional &amp; Business Services</option>
+                <option>Public Sector / Government</option>
+                <option>Nonprofit / Community Organization</option>
+                <option>Education</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid3">
+            <div class="field">
+              <label for="contact_name">Your name <span class="req">*</span></label>
+              <input type="text" id="contact_name" name="contact_name" required />
+            </div>
+            <div class="field">
+              <label for="contact_title">Your title</label>
+              <input type="text" id="contact_title" name="contact_title" />
+            </div>
+            <div class="field">
+              <label for="company_size">Company size</label>
+              <select id="company_size" name="company_size">
+                <option value="">Select…</option>
+                <option>1–10 employees</option>
+                <option>11–50</option>
+                <option>51–200</option>
+                <option>201–500</option>
+                <option>500+</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid3">
+            <div class="field">
+              <label for="email">Email <span class="req">*</span></label>
+              <input type="email" id="email" name="email" required />
+            </div>
+            <div class="field">
+              <label for="phone">Phone</label>
+              <input type="tel" id="phone" name="phone" />
+            </div>
+            <div class="field">
+              <label for="city">City / location</label>
+              <input type="text" id="city" name="city" />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- 2. WORKFORCE & SKILLS -->
+        <fieldset>
+          <legend><span class="lg-num">02</span> Your workforce &amp; skill gaps</legend>
+          <p class="legend-sub">Help us understand who would be trained and what's missing today.</p>
+          <div class="grid2">
+            <div class="field">
+              <label for="participants">How many employees might take part?</label>
+              <select id="participants" name="participants">
+                <option value="">Select…</option>
+                <option>1–10</option>
+                <option>11–25</option>
+                <option>26–50</option>
+                <option>51–100</option>
+                <option>100+</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="hiring_gap">Are there roles you struggle to fill or hire for?</label>
+              <input type="text" id="hiring_gap" name="hiring_gap" placeholder="e.g., data analysts, supervisors, technicians" />
+            </div>
+          </div>
+          <div class="field">
+            <label>Which groups need upskilling? <span class="help">(check any)</span></label>
+            <div class="checks" data-group="roles">
+              <label class="check"><input type="checkbox" name="roles" value="Frontline / operations" /> Frontline / operations</label>
+              <label class="check"><input type="checkbox" name="roles" value="Administrative / clerical" /> Administrative / clerical</label>
+              <label class="check"><input type="checkbox" name="roles" value="Customer service" /> Customer service</label>
+              <label class="check"><input type="checkbox" name="roles" value="Sales / marketing" /> Sales / marketing</label>
+              <label class="check"><input type="checkbox" name="roles" value="Technical / engineering" /> Technical / engineering</label>
+              <label class="check"><input type="checkbox" name="roles" value="IT / data" /> IT / data</label>
+              <label class="check"><input type="checkbox" name="roles" value="Management / supervisory" /> Management / supervisory</label>
+              <label class="check"><input type="checkbox" name="roles" value="HR / finance / admin leadership" /> HR / finance / admin leadership</label>
+            </div>
+          </div>
+          <div class="field">
+            <label for="skill_gap">In your own words, what's the biggest skill gap right now?</label>
+            <textarea id="skill_gap" name="skill_gap" placeholder="What would change for your business if this gap were closed?"></textarea>
+          </div>
+        </fieldset>
+
+        <!-- 3. AI READINESS -->
+        <fieldset>
+          <legend><span class="lg-num">03</span> AI readiness &amp; interest</legend>
+          <p class="legend-sub">Our flagship area — even if you're just starting to explore, this helps us calibrate.</p>
+          <div class="field">
+            <label>Where is your organization with AI today?</label>
+            <div class="scale" data-group="ai_stage">
+              <label><input type="radio" name="ai_stage" value="Not using it" /><span>Not using it</span></label>
+              <label><input type="radio" name="ai_stage" value="Exploring" /><span>Exploring</span></label>
+              <label><input type="radio" name="ai_stage" value="Piloting" /><span>Piloting</span></label>
+              <label><input type="radio" name="ai_stage" value="Using in some workflows" /><span>In some workflows</span></label>
+              <label><input type="radio" name="ai_stage" value="Embedded across teams" /><span>Embedded</span></label>
+            </div>
+          </div>
+          <div class="field">
+            <label>Which AI use cases matter most to you? <span class="help">(check any)</span></label>
+            <div class="checks" data-group="ai_uses">
+              <label class="check"><input type="checkbox" name="ai_uses" value="Writing & communication" /> Writing &amp; communication</label>
+              <label class="check"><input type="checkbox" name="ai_uses" value="Data analysis & reporting" /> Data analysis &amp; reporting</label>
+              <label class="check"><input type="checkbox" name="ai_uses" value="Customer service / chatbots" /> Customer service / chatbots</label>
+              <label class="check"><input type="checkbox" name="ai_uses" value="Marketing & content creation" /> Marketing &amp; content creation</label>
+              <label class="check"><input type="checkbox" name="ai_uses" value="Document processing & summarizing" /> Document processing &amp; summarizing</label>
+              <label class="check"><input type="checkbox" name="ai_uses" value="Process automation" /> Process automation</label>
+              <label class="check"><input type="checkbox" name="ai_uses" value="Coding / development" /> Coding / development</label>
+              <label class="check"><input type="checkbox" name="ai_uses" value="AI policy, ethics & governance" /> AI policy, ethics &amp; governance</label>
+              <label class="check"><input type="checkbox" name="ai_uses" value="Industry-specific tools" /> Industry-specific tools</label>
+              <label class="check"><input type="checkbox" name="ai_uses" value="Not sure yet" /> Not sure yet</label>
+            </div>
+          </div>
+          <div class="field">
+            <label for="ai_barrier">What's the biggest thing holding back AI adoption for you?</label>
+            <select id="ai_barrier" name="ai_barrier">
+              <option value="">Select…</option>
+              <option>Staff don't have the skills</option>
+              <option>Trust, accuracy, or ethics concerns</option>
+              <option>Data security / privacy</option>
+              <option>Don't know where to start</option>
+              <option>Cost</option>
+              <option>Leadership buy-in</option>
+              <option>No clear use case yet</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </fieldset>
+
+        <!-- 4. LOGISTICS -->
+        <fieldset>
+          <legend><span class="lg-num">04</span> Format, timing &amp; funding</legend>
+          <div class="grid2">
+            <div class="field">
+              <label for="format">Preferred format</label>
+              <select id="format" name="format">
+                <option value="">Select…</option>
+                <option>On-site at our workplace</option>
+                <option>On the LBCC campus</option>
+                <option>Live online</option>
+                <option>Hybrid</option>
+                <option>Self-paced / flexible</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="length">Preferred length</label>
+              <select id="length" name="length">
+                <option value="">Select…</option>
+                <option>1–2 hour workshop</option>
+                <option>Half day</option>
+                <option>Full day</option>
+                <option>Multi-session series</option>
+                <option>Multi-week program</option>
+                <option>Not sure — advise us</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid3">
+            <div class="field">
+              <label for="timing">When works best?</label>
+              <select id="timing" name="timing">
+                <option value="">Select…</option>
+                <option>Business hours</option>
+                <option>Evenings</option>
+                <option>Weekends</option>
+                <option>Flexible</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="credential">Credential interest</label>
+              <select id="credential" name="credential">
+                <option value="">Select…</option>
+                <option>None needed</option>
+                <option>Certificate of completion</option>
+                <option>Noncredit certificate</option>
+                <option>Digital badge</option>
+                <option>Stackable toward college credit</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="funding">Funding</label>
+              <select id="funding" name="funding">
+                <option value="">Select…</option>
+                <option>Self-funded</option>
+                <option>Interested in ETP / WIOA offset</option>
+                <option>Need more information</option>
+                <option>Not sure yet</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="timeline">How soon are you looking to start?</label>
+            <select id="timeline" name="timeline">
+              <option value="">Select…</option>
+              <option>As soon as possible</option>
+              <option>This quarter</option>
+              <option>Next 3–6 months</option>
+              <option>Just exploring for now</option>
+            </select>
+          </div>
+        </fieldset>
+
+        <!-- 5. OPEN -->
+        <fieldset>
+          <legend><span class="lg-num">05</span> Anything else</legend>
+          <div class="field">
+            <label for="outcome">Describe your ideal outcome in a sentence or two.</label>
+            <textarea id="outcome" name="outcome" placeholder="After this training, our team would be able to…"></textarea>
+          </div>
+          <div class="field">
+            <label for="notes">Specific topics, tools, or constraints we should know about?</label>
+            <textarea id="notes" name="notes"></textarea>
+          </div>
+        </fieldset>
+
+        <div class="form-actions">
+          <button type="submit" class="submit-btn" id="submitBtn">Send to Workforce Development</button>
+          <p class="privacy">Your responses go to LBCC's Workforce Development team to help shape training options. We'll only use them to follow up with you.</p>
+        </div>
+
+        <div class="formmsg" id="formMsg" role="status" aria-live="polite"></div>
+      </form>
+
+      <!-- success replacement -->
+      <div class="success-screen" id="successScreen">
+        <div class="ic">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <h2>Thank you — we've got it.</h2>
+        <p>Your information is on its way to our Workforce Development team. Someone will reach out to talk through options that fit your team. In the meantime, feel free to revisit the offerings above.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <h4>LBCC Workforce &amp; Economic Development</h4>
+        <p>Training today's workforce for the demands of tomorrow — through customized programs for businesses across Long Beach and the harbor region.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <div class="foot-links">
+          <a href="#ai-series">AI upskilling</a>
+          <a href="#intake">Start the conversation</a>
+          <a href="https://www.lbcc.edu/programs-and-trainings" target="_blank" rel="noopener">Programs &amp; Trainings</a>
+          <a href="https://www.lbcc.edu/college-catalog" target="_blank" rel="noopener">College Catalog</a>
+        </div>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <div class="foot-links">
+          <!-- TODO: confirm the public WFD contact line/email before publishing -->
+          <a href="mailto:vcalip@lbcc.edu">vcalip@lbcc.edu</a>
+          <a href="https://www.lbcc.edu/workforce-development" target="_blank" rel="noopener">lbcc.edu/workforce-development</a>
+          <span>Long Beach, CA</span>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="yr"></span> Long Beach City College. All rights reserved.</span>
+      <span>An equal-opportunity institution.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  /* checkbox visual state */
+  document.querySelectorAll('.check input').forEach(function(cb){
+    cb.addEventListener('change', function(){
+      this.closest('.check').classList.toggle('sel', this.checked);
+    });
+  });
+
+  /* scroll reveal */
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+    }, {threshold:.12});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+  }
+
+  /* ---------- form submission ---------- */
+  // Stable field list so the spreadsheet columns never drift.
+  var FIELDS = [
+    'org_name','sector','contact_name','contact_title','company_size','email','phone','city',
+    'participants','hiring_gap','roles','skill_gap',
+    'ai_stage','ai_uses','ai_barrier',
+    'format','length','timing','credential','funding','timeline',
+    'outcome','notes'
+  ];
+
+  function collect(form){
+    var data = {};
+    FIELDS.forEach(function(name){
+      var nodes = form.querySelectorAll('[name="'+name+'"]');
+      if (!nodes.length){ data[name]=''; return; }
+      var type = nodes[0].type;
+      if (type === 'checkbox'){
+        data[name] = Array.from(nodes).filter(function(n){return n.checked;}).map(function(n){return n.value;});
+      } else if (type === 'radio'){
+        var sel = Array.from(nodes).find(function(n){return n.checked;});
+        data[name] = sel ? sel.value : '';
+      } else {
+        data[name] = nodes[0].value.trim();
+      }
+    });
+    data.submitted_at = new Date().toISOString();
+    data.page = location.href;
+    return data;
+  }
+
+  async function send(data){
+    var cfg = window.LBCC_CONFIG || {};
+    if (!cfg.endpoint){ return {ok:true, demo:true}; }
+    if (cfg.mode === 'formspree'){
+      var res = await fetch(cfg.endpoint, {
+        method:'POST',
+        headers:{'Accept':'application/json','Content-Type':'application/json'},
+        body: JSON.stringify(data)
+      });
+      return {ok: res.ok};
+    }
+    // apps_script: text/plain avoids a CORS preflight; no-cors makes it fire-and-forget.
+    await fetch(cfg.endpoint, {
+      method:'POST',
+      mode:'no-cors',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body: JSON.stringify(data)
+    });
+    return {ok:true, opaque:true};
+  }
+
+  var form = document.getElementById('intakeForm');
+  var msg  = document.getElementById('formMsg');
+  var btn  = document.getElementById('submitBtn');
+
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    msg.className = 'formmsg';
+
+    // minimal required validation
+    var required = ['org_name','sector','contact_name','email'];
+    var firstBad = null;
+    required.forEach(function(id){
+      var el = document.getElementById(id);
+      if (!el.value.trim()){ el.style.borderColor = '#C0392B'; if(!firstBad) firstBad = el; }
+      else { el.style.borderColor = ''; }
+    });
+    var emailEl = document.getElementById('email');
+    if (emailEl.value && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(emailEl.value)){
+      emailEl.style.borderColor = '#C0392B'; if(!firstBad) firstBad = emailEl;
+    }
+    if (firstBad){
+      msg.className = 'formmsg err';
+      msg.textContent = 'Please fill in the required fields (organization, sector, your name, and a valid email).';
+      firstBad.focus();
+      return;
+    }
+
+    btn.disabled = true;
+    var original = btn.textContent;
+    btn.textContent = 'Sending…';
+
+    try {
+      var data = collect(form);
+      var result = await send(data);
+      if (result.demo){
+        msg.className = 'formmsg demo';
+        msg.innerHTML = '<strong>Demo mode.</strong> No endpoint is configured yet, so nothing was saved. Add your Google Apps Script or Formspree URL to <code>LBCC_CONFIG.endpoint</code> at the top of the file to go live.';
+        btn.disabled = false; btn.textContent = original;
+        return;
+      }
+      if (result.ok){
+        form.style.display = 'none';
+        document.getElementById('successScreen').classList.add('show');
+        document.getElementById('successScreen').scrollIntoView({behavior:'smooth', block:'center'});
+      } else {
+        throw new Error('Request failed');
+      }
+    } catch(err){
+      msg.className = 'formmsg err';
+      msg.textContent = 'Something went wrong sending your information. Please try again, or email us directly at vcalip@lbcc.edu.';
+      btn.disabled = false; btn.textContent = original;
+    }
+  });
+</script>
+<script>
+  /* ---------- scroll-driven entrance ---------- */
+  (function(){
+    var stage = document.getElementById('entrance');
+    if(!stage) return;
+    var body = document.body;
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Reduced motion: skip the choreography, show an open door, reveal the nav.
+    if(reduce){ body.classList.add('entered'); return; }
+
+    var ease = function(t){ return t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2; };
+    var ticking = false;
+
+    function update(){
+      ticking = false;
+      var rect = stage.getBoundingClientRect();
+      var total = stage.offsetHeight - window.innerHeight;
+      var scrolled = Math.min(Math.max(-rect.top, 0), total);
+      var p = total > 0 ? scrolled / total : 0;
+
+      var open = ease(Math.min(p / 0.55, 1));
+      var push = ease(Math.min(Math.max((p - 0.5) / 0.5, 0), 1));
+      stage.style.setProperty('--open', open.toFixed(4));
+      stage.style.setProperty('--push', push.toFixed(4));
+
+      body.classList.toggle('entered', p > 0.9);
+    }
+    function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(update); } }
+
+    window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('resize', onScroll, {passive:true});
+    update();
+
+    var skip = document.getElementById('enterSkip');
+    if(skip){
+      skip.addEventListener('click', function(){
+        body.classList.add('entered');
+        var top = document.getElementById('top');
+        if(top) top.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    }
+  })();
+</script>
+</body>
+</html>
