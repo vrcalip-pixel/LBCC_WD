@@ -630,6 +630,7 @@ footer a:hover{color:var(--gold)}
         </div>
         <h2>You're in. We've got it from here.</h2>
         <p id="successCopy">Your inquiry is on its way to the team member who owns your service area — expect a real response within two business days.</p>
+        <button type="button" class="btn btn-line" id="resetFormBtn" style="margin-top:24px;font-size:.92rem;padding:11px 24px">Submit another inquiry</button>
       </div>
     </div>
   </div>
@@ -763,6 +764,28 @@ footer a:hover{color:var(--gold)}
   var form = document.getElementById('intakeForm');
   var msg = document.getElementById('formMsg');
   var btn = document.getElementById('submitBtn');
+
+  /* ---------- "Submit another inquiry" — reset the form in place ---------- */
+  document.getElementById('resetFormBtn').addEventListener('click', function(){
+    form.reset();
+    /* clear pathway selection, branches, and org block */
+    pathRadios.forEach(function(r){ r.closest('.pathway').classList.remove('on'); });
+    document.querySelectorAll('.branch').forEach(function(b){ b.classList.remove('on'); });
+    orgBlock.classList.remove('on');
+    /* clear checkbox highlights and any validation borders */
+    document.querySelectorAll('.check.sel').forEach(function(c){ c.classList.remove('sel'); });
+    form.querySelectorAll('input,select,textarea').forEach(function(el){ el.style.borderColor = ''; });
+    /* restore original success copy and submit button state */
+    document.getElementById('successCopy').textContent =
+      'Your inquiry is on its way to the team member who owns your service area — expect a real response within two business days.';
+    btn.disabled = false;
+    btn.textContent = 'Send to Workforce Development';
+    msg.className = 'formmsg';
+    /* swap screens and return to the top of the form */
+    document.getElementById('successScreen').classList.remove('show');
+    form.style.display = '';
+    document.getElementById('intake').scrollIntoView({behavior:'smooth', block:'start'});
+  });
 
   form.addEventListener('submit', async function(e){
     e.preventDefault();
