@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LBCC Workforce Development | Train Your Team. Build Your Team.</title>
+<meta name="description" content="Long Beach City College's front door for employers: customized training for your current team, or hiring, internships, and apprenticeships to build your next one." />
+
+<!-- ============================================================= -->
+<!--  CONFIG — set before publishing (same endpoint powers the form) -->
+<!-- ============================================================= -->
+<script>
+  window.LBCC_CONFIG = {
+    endpoint: "",
+    mode: "apps_script",   // "apps_script" | "formspree"
+  };
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+/* ===== shared styles (inlined for standalone viewing) ===== */
+/* LBCC Workforce Development — shared styles (all pages) */
+:root{
+  --navy:#003366; --ink:#0B1F33; --gold:#FFB81C; --gold-deep:#E0A012;
+  --teal:#0F6E56; --teal-deep:#0A5240; --steel:#5F6B76;
+  --cream:#FAFAF7; --paper:#ffffff; --slate:#5A6B7B; --line:#E4E2DA;
+  --shadow:0 1px 2px rgba(11,31,51,.06), 0 8px 24px rgba(11,31,51,.08);
+  --r:14px; --maxw:1140px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{margin:0;font-family:"Inter",system-ui,-apple-system,sans-serif;color:var(--ink);
+  background:var(--cream);line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:"Space Grotesk",sans-serif;line-height:1.12;letter-spacing:-.02em;margin:0}
+p{margin:0}
+a{color:var(--navy)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.eyebrow{font-size:.76rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--slate)}
+.eyebrow.gold{color:var(--gold-deep)}
+.eyebrow.teal{color:var(--teal)}
+
+.skip-to-content{position:absolute;left:-9999px;top:0;z-index:200;background:var(--navy);color:#fff;
+  padding:12px 18px;border-radius:0 0 10px 0;font-weight:600;text-decoration:none}
+.skip-to-content:focus{left:0}
+
+/* top bar */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:60;background:rgba(250,250,247,.88);
+  backdrop-filter:saturate(180%) blur(10px);border-bottom:1px solid var(--line);transition:transform .45s ease}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:14px}
+.brand{display:flex;align-items:center;gap:11px;font-family:"Space Grotesk";font-weight:700;
+  color:var(--navy);text-decoration:none;font-size:1rem;min-width:0}
+.brand .mark{width:34px;height:34px;border-radius:9px;flex:0 0 auto;background:var(--navy);color:var(--gold);
+  display:grid;place-items:center;font-weight:700;font-size:.95rem}
+.brand small{display:block;font-family:"Inter";font-weight:500;color:var(--slate);font-size:.7rem}
+.topnav{display:flex;align-items:center;gap:20px}
+.topnav a{font-weight:600;font-size:.9rem;text-decoration:none;color:var(--ink);white-space:nowrap}
+.topnav a:hover{color:var(--navy)}
+.nav-cta{background:var(--gold);color:var(--ink)!important;padding:10px 18px;border-radius:999px;
+  transition:transform .15s ease, box-shadow .15s ease}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(224,160,18,.4)}
+@media (max-width:760px){ .topnav a:not(.nav-cta){display:none} }
+
+/* buttons */
+.btn{font-family:"Inter";font-weight:600;font-size:1rem;text-decoration:none;cursor:pointer;border:0;
+  padding:14px 28px;border-radius:999px;display:inline-flex;align-items:center;gap:9px;
+  transition:transform .15s ease, box-shadow .15s ease}
+.btn-gold{background:var(--gold);color:var(--ink)}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(255,184,28,.38)}
+.btn-teal{background:var(--teal);color:#fff}
+.btn-teal:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(15,110,86,.38)}
+.btn-line{background:transparent;color:var(--navy);border:1.5px solid var(--navy)}
+.btn-line:hover{background:rgba(0,51,102,.06)}
+.micro{font-size:.86rem;color:var(--slate)}
+.cta-row{margin-top:30px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+
+/* sections */
+section{padding:76px 0}
+.section-head{max-width:62ch;margin-bottom:38px}
+.section-head h2{font-size:clamp(1.65rem,3vw,2.3rem);color:var(--navy);margin:10px 0 0}
+.section-head p{margin-top:13px;color:var(--slate);font-size:1.04rem}
+
+/* promise strip */
+.promise{background:var(--navy);color:#fff}
+.promise .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.pitem{padding:24px 22px;border-left:1px solid rgba(255,255,255,.12)}
+.pitem:first-child{border-left:0}
+.pitem h4{font-size:1rem;color:var(--gold);margin-bottom:5px}
+.pitem p{font-size:.88rem;color:#c4d0db}
+@media (max-width:900px){ .promise .wrap{grid-template-columns:1fr 1fr} .pitem:nth-child(3){border-left:0} }
+@media (max-width:560px){ .promise .wrap{grid-template-columns:1fr} .pitem{border-left:0;border-top:1px solid rgba(255,255,255,.12)} .pitem:first-child{border-top:0} }
+
+/* cards */
+.cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.cat{position:relative;background:var(--cream);border:1px solid var(--line);border-radius:var(--r);
+  padding:22px 20px;display:flex;flex-direction:column;gap:8px;transition:transform .16s ease, box-shadow .16s ease}
+.cat:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.cat h3{font-size:1.08rem;color:var(--navy)}
+.cat p{font-size:.92rem;color:var(--slate);flex:1}
+.cat .sessions{font-size:.82rem;color:var(--ink);font-weight:600}
+.ready{position:absolute;top:14px;right:14px;background:#EAF6EF;color:var(--teal);border:1px solid #BFE3CD;
+  font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:999px}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.svc{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:24px 22px;
+  display:flex;flex-direction:column;gap:9px;transition:transform .16s ease, box-shadow .16s ease}
+.svc:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.svc .ic{width:42px;height:42px;border-radius:11px;background:#E8F3EF;color:var(--teal);
+  display:grid;place-items:center;font-size:1.2rem}
+.svc h3{font-size:1.1rem;color:var(--navy)}
+.svc p{font-size:.93rem;color:var(--slate);flex:1}
+.fmt-line{margin-top:26px;padding:16px 20px;border-left:3px solid var(--gold);background:#FFFCF3;
+  border-radius:0 10px 10px 0;font-size:.95rem}
+
+/* process + people */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.step{padding:24px 20px;border:1px solid var(--line);border-radius:var(--r);background:var(--cream)}
+.step .stepnum{font-family:"Space Grotesk";font-weight:700;font-size:1.4rem;color:var(--gold-deep)}
+.step h3{font-size:1.06rem;color:var(--navy);margin:8px 0 7px}
+.step p{font-size:.92rem;color:var(--slate)}
+.sla{margin-top:26px;text-align:center;font-family:"Space Grotesk";font-weight:600;font-size:1.12rem;color:var(--navy)}
+.sla b{color:var(--teal)}
+.people-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.person{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:22px;display:flex;gap:15px;align-items:flex-start}
+.person .avatar{width:52px;height:52px;border-radius:50%;flex:0 0 auto;display:grid;place-items:center;
+  font-family:"Space Grotesk";font-weight:700;font-size:1.05rem;color:#fff}
+.person h3{font-size:1.02rem;color:var(--navy)}
+.person .role{font-size:.82rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin:2px 0 6px}
+.person p{font-size:.9rem;color:var(--slate)}
+
+/* subpage hero band */
+.pagehero{background:var(--ink);color:#fff;padding:110px 0 56px;position:relative;overflow:hidden}
+.pagehero::before{content:"";position:absolute;inset:0;opacity:.5;
+  background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+  background-size:46px 46px;
+  -webkit-mask-image:radial-gradient(ellipse 90% 90% at 50% 0%,#000,transparent);
+          mask-image:radial-gradient(ellipse 90% 90% at 50% 0%,#000,transparent)}
+.pagehero .wrap{position:relative}
+.pagehero h1{color:#fff;font-size:clamp(1.8rem,3.8vw,2.7rem);max-width:24ch;margin-top:12px}
+.pagehero p{color:#cdd6df;margin-top:14px;max-width:56ch;font-size:1.06rem}
+.pagehero .crumb{font-size:.86rem;color:#9fb0be;text-decoration:none;display:inline-flex;gap:6px;align-items:center}
+.pagehero .crumb:hover{color:#fff}
+.accent-gold{border-top:8px solid var(--gold)}
+.accent-teal{border-top:8px solid var(--teal)}
+.accent-steel{border-top:8px solid var(--steel)}
+
+/* form */
+.form-section{background:var(--cream)}
+.form-shell{background:var(--paper);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);overflow:hidden}
+.form-top{background:var(--navy);color:#fff;padding:30px 34px}
+.form-top .eyebrow{color:var(--gold)}
+.form-top h2{color:#fff;font-size:1.65rem;margin:8px 0 6px}
+.form-top p{color:#c4d0db;font-size:.97rem;max-width:62ch}
+form{padding:34px}
+fieldset{border:0;margin:0 0 8px;padding:0 0 28px;border-bottom:1px solid var(--line)}
+fieldset:last-of-type{border-bottom:0;padding-bottom:6px}
+legend{font-family:"Space Grotesk";font-weight:600;font-size:1.14rem;color:var(--navy);margin-bottom:4px}
+.legend-sub{color:var(--slate);font-size:.92rem;margin:2px 0 18px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+.field{display:flex;flex-direction:column;gap:7px;margin-bottom:18px}
+.field:last-child{margin-bottom:0}
+label{font-weight:600;font-size:.92rem}
+label .req{color:#C0392B;font-weight:700}
+input[type=text],input[type=email],input[type=tel],input[type=url],select,textarea{
+  font-family:"Inter";font-size:.98rem;color:var(--ink);background:#fff;border:1.5px solid var(--line);
+  border-radius:10px;padding:12px 14px;width:100%;transition:border-color .15s ease, box-shadow .15s ease}
+input:focus,select:focus,textarea:focus{outline:0;border-color:var(--navy);box-shadow:0 0 0 3px rgba(0,51,102,.12)}
+textarea{resize:vertical;min-height:90px}
+.help{font-size:.82rem;color:var(--slate);font-weight:400}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.check{display:flex;align-items:flex-start;gap:10px;border:1.5px solid var(--line);border-radius:10px;
+  padding:11px 13px;cursor:pointer;font-size:.92rem;transition:border-color .14s ease, background .14s ease;user-select:none}
+.check:hover{border-color:#c9c6ba;background:#fcfbf7}
+.check input{margin-top:2px;accent-color:var(--navy);width:17px;height:17px;flex:0 0 auto}
+.check.sel{border-color:var(--navy);background:#F3F7FB}
+.pathways{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pathway{--accent:var(--gold);--accent-soft:#FFF4D6;position:relative;border:2px solid var(--line);border-radius:14px;
+  padding:18px 16px;cursor:pointer;display:flex;flex-direction:column;gap:5px;transition:all .15s ease;user-select:none}
+.pathway.teal{--accent:var(--teal);--accent-soft:#E8F3EF}
+.pathway.steel{--accent:var(--steel);--accent-soft:#EEF1F4}
+.pathway input{position:absolute;opacity:0;pointer-events:none}
+.pathway strong{font-family:"Space Grotesk";font-size:1rem;color:var(--navy)}
+.pathway span{font-size:.83rem;color:var(--slate)}
+.pathway:hover{border-color:var(--accent)}
+.pathway.on{border-color:var(--accent);background:var(--accent-soft);box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent)}
+.pathway:has(input:focus-visible){outline:3px solid var(--accent);outline-offset:2px}
+.pathway.hidden{display:none}
+.branch{display:none}
+.branch.on{display:block}
+.org-only{display:none}
+.org-only.on{display:block}
+.form-actions{margin-top:30px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.submit-btn{font-family:"Inter";font-weight:600;font-size:1.04rem;border:0;cursor:pointer;
+  background:var(--gold);color:var(--ink);padding:15px 34px;border-radius:999px;
+  transition:transform .15s ease, box-shadow .15s ease}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(255,184,28,.4)}
+.submit-btn:disabled{opacity:.6;cursor:wait;transform:none;box-shadow:none}
+.privacy{font-size:.84rem;color:var(--slate);max-width:46ch}
+.formmsg{display:none;padding:18px 20px;border-radius:12px;margin-top:20px;font-size:.96rem}
+.formmsg.ok{display:block;background:#EAF6EF;border:1px solid #BFE3CD;color:#1d6b43}
+.formmsg.err{display:block;background:#FCEDEC;border:1px solid #F2C7C3;color:#9B2C22}
+.formmsg.demo{display:block;background:#FFF7E2;border:1px solid #F3DFA6;color:#8a6400}
+.success-screen{display:none;padding:58px 34px;text-align:center}
+.success-screen.show{display:block}
+.success-screen .ic{width:64px;height:64px;border-radius:50%;background:#EAF6EF;color:var(--teal);
+  display:grid;place-items:center;margin:0 auto 18px}
+.success-screen h2{color:var(--navy);font-size:1.65rem}
+.success-screen p{color:var(--slate);margin-top:12px;max-width:50ch;margin-left:auto;margin-right:auto}
+@media (max-width:720px){ .pathways{grid-template-columns:1fr} }
+@media (max-width:620px){ .checks{grid-template-columns:1fr} .grid2,.grid3{grid-template-columns:1fr} form{padding:24px 20px} .form-top{padding:24px 22px} }
+
+/* footer */
+footer{background:var(--navy);color:#cdd6df;padding:52px 0 36px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
+footer h4{color:#fff;font-size:1.02rem;margin:0 0 13px}
+footer a{color:#cdd6df;text-decoration:none}
+footer a:hover{color:var(--gold)}
+.foot-links{display:grid;gap:9px;font-size:.94rem}
+.foot-brand p{font-size:.93rem;margin-top:11px;color:#aeb9c4;max-width:42ch}
+.foot-bottom{border-top:1px solid rgba(255,255,255,.12);margin-top:34px;padding-top:22px;font-size:.84rem;
+  color:#92a0ad;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+@media (max-width:760px){ .foot-grid{grid-template-columns:1fr} }
+
+/* reveal + responsive */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+@media (max-width:900px){ .cat-grid,.svc-grid,.people-grid,.steps{grid-template-columns:1fr 1fr} }
+@media (max-width:620px){ .cat-grid,.svc-grid,.people-grid,.steps{grid-template-columns:1fr} section{padding:58px 0} }
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none;transition:none}
+  .btn,.cat,.svc,.nav-cta,.submit-btn{transition:none}
+}
+
+</style>
+
+<style>
+  /* ================= ENTRANCE (landing page only) ================= */
+  body:not(.entered) .topbar{transform:translateY(-110%)}
+  .doorstage{--open:0;--push:0;position:relative;z-index:40;height:190vh;background:var(--ink)}
+  body.returning .doorstage{display:none}
+  .doorstage-sticky{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:grid;place-items:center;
+    background:radial-gradient(ellipse 70% 60% at 50% 42%, rgba(255,184,28,.14), transparent 60%), var(--ink)}
+  .zoom{transform:scale(calc(1 + var(--push)*2.2));opacity:calc(1 - var(--push));will-change:transform,opacity}
+  .stage3d{perspective:1500px;perspective-origin:50% 45%}
+  .scene{position:relative;width:min(580px,90vw);height:min(640px,74svh);transform-style:preserve-3d}
+
+  /* what's behind the doors IS the landing page's opening moment */
+  .room{position:absolute;inset:0;overflow:hidden;background:var(--ink);
+    transform:translateZ(-360px) scale(calc(.74 + var(--open)*.26));
+    opacity:calc(.1 + var(--open)*.9);
+    filter:blur(calc((1 - var(--open))*5px)) brightness(calc(.48 + var(--open)*.52));
+    will-change:transform,opacity,filter;display:grid;place-items:center}
+  .room-grid{position:absolute;inset:0;opacity:.5;
+    background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+    background-size:40px 40px;
+    -webkit-mask-image:radial-gradient(ellipse 80% 72% at 50% 46%,#000,transparent);
+            mask-image:radial-gradient(ellipse 80% 72% at 50% 46%,#000,transparent)}
+  .room-glow{position:absolute;inset:0;background:radial-gradient(ellipse 62% 60% at 50% 48%, rgba(255,184,28,.24), transparent 62%)}
+  .room-hero{position:relative;text-align:center;padding:0 10%}
+  .room-hero .eyebrow{color:var(--gold);font-size:clamp(.5rem,1.4vw,.68rem)}
+  .room-hero h2{font-family:"Space Grotesk";color:#fff;font-weight:700;letter-spacing:-.02em;
+    font-size:clamp(1rem,3.2vw,1.6rem);margin-top:8px;line-height:1.15}
+
+  /* brushed-metal frame */
+  .doorframe{position:absolute;inset:0;transform-style:preserve-3d;border:9px solid transparent;border-bottom:0;
+    border-image:linear-gradient(90deg,#8f969d,#eef1f3 22%,#c9ced3 50%,#eef1f3 78%,#8f969d) 1}
+
+  /* frosted-glass leaves — now with real thickness, moving light, hinge shading */
+  .leaf{position:absolute;top:0;bottom:0;width:50%;transform-style:preserve-3d;will-change:transform;
+    box-shadow:0 22px 55px rgba(0,0,0,.5)}
+  .leaf-left{left:0;transform-origin:left center;transform:rotateY(calc(var(--open)*-114deg))}
+  .leaf-right{right:0;transform-origin:right center;transform:rotateY(calc(var(--open)*114deg))}
+  .face{position:absolute;inset:0;overflow:hidden;backface-visibility:hidden;
+    background:linear-gradient(180deg, rgba(230,238,244,.95), rgba(203,216,227,.9) 60%, rgba(214,224,232,.92))}
+  /* leading-edge slab: the door's physical depth, visible as it swings */
+  .edge{position:absolute;top:0;bottom:0;width:16px;
+    background:linear-gradient(180deg,#aeb6bd,#8d959c 55%,#a7afb6);
+    box-shadow:inset 0 0 4px rgba(0,0,0,.25)}
+  .leaf-left .edge{left:100%;transform-origin:left center;transform:rotateY(90deg)}
+  .leaf-right .edge{right:100%;transform-origin:right center;transform:rotateY(-90deg)}
+  /* light falls off toward the hinge as the leaf rotates away from the room light */
+  .shade{position:absolute;inset:0;pointer-events:none;opacity:calc(var(--open)*.45)}
+  .leaf-left .shade{background:linear-gradient(90deg, rgba(4,12,20,.85), transparent 70%)}
+  .leaf-right .shade{background:linear-gradient(-90deg, rgba(4,12,20,.85), transparent 70%)}
+  .glass{position:absolute;inset:10px;border-radius:2px;
+    background:linear-gradient(180deg, rgba(255,255,255,.28), rgba(255,255,255,0) 30%),
+               radial-gradient(ellipse 90% 60% at 50% 110%, rgba(255,210,130,.35), transparent 60%);
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.35), inset 0 -5px 0 rgba(255,184,28,.55)}
+  /* reflection that travels across the glass as the door swings */
+  .sheen{position:absolute;top:-10%;bottom:-10%;width:52%;transform:skewX(-14deg);
+    background:linear-gradient(90deg, transparent, rgba(255,255,255,.55), transparent);
+    opacity:calc(.45 - var(--open)*.25)}
+  .leaf-left .sheen{left:calc(-28% + var(--open)*46%)}
+  .leaf-right .sheen{right:calc(-28% + var(--open)*46%);transform:skewX(14deg)}
+  .pull{position:absolute;top:33%;height:34%;width:9px;border-radius:6px;
+    background:linear-gradient(90deg,#8a9098,#eef2f5 45%,#aeb4ba);
+    box-shadow:0 3px 8px rgba(0,0,0,.45), inset 0 0 2px rgba(255,255,255,.7)}
+  .leaf-left .pull{right:16px}
+  .leaf-right .pull{left:16px}
+  .kick{position:absolute;left:8px;right:8px;bottom:8px;height:11%;border-radius:2px;
+    background:linear-gradient(180deg,#c2c8ce,#9aa1a8);box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+  .etch{position:absolute;left:6px;right:6px;top:50%;transform:translateY(-50%);text-align:center;white-space:nowrap;
+    font-family:"Space Grotesk";font-weight:700;font-size:clamp(1.25rem,4.6vw,2.05rem);
+    color:var(--navy);opacity:calc(1 - var(--open));text-shadow:0 1px 0 rgba(255,255,255,.55)}
+  /* center seam when closed */
+  .seam{position:absolute;top:0;bottom:0;left:50%;width:2px;transform:translateX(-1px);
+    background:linear-gradient(180deg, rgba(0,0,0,.28), rgba(0,0,0,.14));opacity:calc(1 - var(--open)*2);pointer-events:none}
+  .floorshadow{position:absolute;left:50%;bottom:7%;width:min(740px,96vw);height:120px;transform:translateX(-50%);
+    background:radial-gradient(ellipse 50% 60% at 50% 0%, rgba(0,0,0,.5), transparent 70%);pointer-events:none}
+  .enter-hint{position:absolute;left:0;right:0;bottom:32px;text-align:center;color:#cdd6df;font-weight:500;
+    font-size:.95rem;opacity:calc(1 - var(--open));display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none}
+  .enter-hint .chev{font-size:1.3rem;color:var(--gold);animation:bob 1.6s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+  .enter-skip{position:absolute;top:18px;right:18px;z-index:5;background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.25);color:#fff;font-family:"Inter";font-weight:600;font-size:.85rem;
+    padding:9px 16px;border-radius:999px;cursor:pointer;transition:background .15s ease}
+  .enter-skip:hover{background:rgba(255,255,255,.16)}
+  .enter-skip:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+  /* ================= LOBBY (overview hero) ================= */
+  .lobby{position:relative;background:var(--ink);color:#fff;overflow:hidden}
+  .lobby::before{content:"";position:absolute;inset:0;opacity:.5;
+    background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+    background-size:46px 46px;
+    -webkit-mask-image:radial-gradient(ellipse 90% 80% at 50% 0%,#000,transparent);
+            mask-image:radial-gradient(ellipse 90% 80% at 50% 0%,#000,transparent)}
+  .lobby .wrap{position:relative;padding:76px 24px 84px;text-align:center}
+  .lobby h1{font-size:clamp(1.9rem,4.4vw,3.2rem);font-weight:700;color:#fff;max-width:22ch;margin:14px auto 0}
+  .lobby .lede{margin:18px auto 0;font-size:1.1rem;color:#cdd6df;max-width:54ch}
+  .lobby .eyebrow{color:var(--gold)}
+  .lobby-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+
+  .pathcards{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:880px;margin:48px auto 0;text-align:left}
+  .pathcard{--accent:var(--gold);--accent-deep:var(--gold-deep);
+    position:relative;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:var(--ink);
+    background:linear-gradient(180deg,#f6f8fa,#e9edf1);border-radius:16px;
+    padding:28px 26px 24px;border-top:7px solid var(--accent);
+    box-shadow:0 18px 44px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.8);
+    transition:transform .18s ease, box-shadow .18s ease}
+  .pathcard.teal{--accent:var(--teal);--accent-deep:var(--teal-deep)}
+  .pathcard:hover{transform:translateY(-5px);box-shadow:0 26px 60px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.8)}
+  .pathcard:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+  .pathcard .plate{display:inline-flex;align-self:flex-start;background:var(--accent);color:var(--ink);
+    font-weight:700;font-family:"Space Grotesk";font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
+    padding:6px 12px;border-radius:6px}
+  .pathcard.teal .plate{color:#fff}
+  .pathcard h2{font-size:clamp(1.3rem,2.3vw,1.6rem);color:var(--navy)}
+  .pathcard p{color:var(--slate);font-size:.97rem;flex:1}
+  .pathcard .go{font-weight:700;color:var(--accent-deep);display:inline-flex;align-items:center;gap:8px;margin-top:6px}
+  .pathcard .go::after{content:"→";transition:transform .18s ease}
+  .pathcard:hover .go::after{transform:translateX(5px)}
+  @media (max-width:620px){
+    .pathcards{grid-template-columns:1fr}
+    .doorstage{height:165vh}
+    .etch{font-size:clamp(1.05rem,5.8vw,1.6rem)}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .doorstage{height:auto}
+    .doorstage-sticky{position:relative;height:auto;min-height:60vh;padding:44px 0}
+    .zoom{transform:none;opacity:1}
+    .room{transform:none;opacity:1;filter:none}
+    .leaf-left{transform:rotateY(-102deg)}
+    .leaf-right{transform:rotateY(102deg)}
+    .etch{opacity:0}
+    .seam{opacity:0}
+    .enter-hint .chev{animation:none}
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-to-content" href="#lobby">Skip to main content</a>
+
+<!-- ===================== TOP BAR ===================== -->
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <span class="mark">LB</span>
+      <span>Long Beach City College<small>Workforce &amp; Economic Development</small></span>
+    </a>
+    <nav class="topnav" aria-label="Primary">
+      <a href="training.html">Training &amp; upskilling</a>
+      <a href="hiring.html">Hiring &amp; talent</a>
+      <a class="nav-cta" href="#intake">Get started</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ===================== ENTRANCE ===================== -->
+<section class="doorstage" id="entrance" aria-label="Entrance">
+  <div class="doorstage-sticky">
+    <button type="button" class="enter-skip" id="enterSkip">Skip intro &rarr;</button>
+    <div class="zoom" aria-hidden="true">
+      <div class="stage3d">
+        <div class="scene">
+          <div class="room">
+            <div class="room-grid"></div>
+            <div class="room-glow"></div>
+            <div class="room-hero">
+              <span class="eyebrow">Welcome to Workforce Development</span>
+              <h2>What does your workforce need right now?</h2>
+            </div>
+          </div>
+          <div class="floorshadow"></div>
+          <div class="doorframe">
+            <div class="leaf leaf-left">
+              <span class="face">
+                <span class="glass"></span><span class="sheen"></span>
+                <span class="pull"></span><span class="kick"></span>
+                <span class="etch">WORKFORCE</span>
+                <span class="shade"></span>
+              </span>
+              <span class="edge"></span>
+            </div>
+            <div class="leaf leaf-right">
+              <span class="face">
+                <span class="glass"></span><span class="sheen"></span>
+                <span class="pull"></span><span class="kick"></span>
+                <span class="etch">DEVELOPMENT</span>
+                <span class="shade"></span>
+              </span>
+              <span class="edge"></span>
+            </div>
+            <span class="seam"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="enter-hint" aria-hidden="true">
+      <span>Scroll to step inside</span><span class="chev">&darr;</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== LOBBY (overview) ===================== -->
+<section class="lobby" id="lobby">
+  <div class="wrap">
+    <span class="eyebrow">Welcome to Workforce Development</span>
+    <h1>What does your workforce need right now?</h1>
+    <p class="lede">Long Beach City College partners with employers across the Long Beach and harbor region — training the team you have, and connecting you to the team you need. Tell us your challenge, and the right person gets to work.</p>
+    <div class="lobby-ctas">
+      <a class="btn btn-gold" href="#intake">Start your inquiry</a>
+    </div>
+
+    <div class="pathcards">
+      <a class="pathcard" href="training.html">
+        <span class="plate">Training &amp; Upskilling</span>
+        <h2>Train the team you have</h2>
+        <p>Short, customized workshops that close skill gaps in your current workforce — from business communication to supply chain to AI.</p>
+        <span class="go">Explore training</span>
+      </a>
+      <a class="pathcard teal" href="hiring.html">
+        <span class="plate">Hiring &amp; Talent</span>
+        <h2>Build the team you need</h2>
+        <p>Hire job-ready talent, host interns, or launch an apprenticeship with students and graduates prepared for your roles.</p>
+        <span class="go">Explore hiring &amp; talent</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PROMISE STRIP ===================== -->
+<div class="promise" role="region" aria-label="Our commitments">
+  <div class="wrap">
+    <div class="pitem"><h4>A real reply, fast</h4><p>A member of our team responds to every inquiry within two business days.</p></div>
+    <div class="pitem"><h4>One point of contact</h4><p>You work with one person who knows your organization — no runaround.</p></div>
+    <div class="pitem"><h4>Built around you</h4><p>Programs shaped to your tools, schedule, and goals — not off the shelf.</p></div>
+    <div class="pitem"><h4>Often fundable</h4><p>Many programs qualify for state training-cost offsets (ETP / WIOA).</p></div>
+  </div>
+</div>
+
+<!-- ===================== PROCESS ===================== -->
+<section>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">What happens after you reach out</span>
+      <h2>From inquiry to action, without the runaround</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><div class="stepnum">1</div><h3>You tell us the need</h3><p>Three minutes in the form below — your challenge, your team, your timeline.</p></div>
+      <div class="step reveal"><div class="stepnum">2</div><h3>The right person calls you</h3><p>Your inquiry routes directly to the team member who owns your service area.</p></div>
+      <div class="step reveal"><div class="stepnum">3</div><h3>We move to a plan</h3><p>A scoped proposal — program, format, timing, cost, and funding options — so the conversation becomes action.</p></div>
+    </div>
+    <p class="sla reveal">Our commitment: <b>a real response within two business days.</b></p>
+  </div>
+</section>
+
+<!-- ===================== PEOPLE ===================== -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Who you'll work with</span>
+      <h2>Real people, not a general inbox</h2>
+    </div>
+    <!-- TODO: confirm names, titles, and preferred contact lines with the WD team before launch -->
+    <div class="people-grid">
+      <div class="person reveal">
+        <span class="avatar" style="background:var(--gold-deep)">SS</span>
+        <div>
+          <h3>Stephanie Suarez</h3>
+          <p class="role" style="color:var(--gold-deep)">Training &amp; Upskilling</p>
+          <p>Owns every training inquiry — from first call to your team's first session.</p>
+        </div>
+      </div>
+      <div class="person reveal">
+        <span class="avatar" style="background:var(--teal)">V</span>
+        <div>
+          <h3>Veronica</h3>
+          <p class="role" style="color:var(--teal)">Hiring &amp; Placement Services</p>
+          <p>Connects employers to talent — direct hires, internships, and apprenticeships.</p>
+        </div>
+      </div>
+      <div class="person reveal">
+        <span class="avatar" style="background:var(--navy)">MD</span>
+        <div>
+          <h3>Dr. Miles Dean</h3>
+          <p class="role" style="color:var(--navy)">Executive Director</p>
+          <p>Leads Workforce Development and partnerships across the Long Beach region.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== INTAKE FORM ===================== -->
+<section class="form-section" id="intake" style="padding-top:0">
+  <div class="wrap">
+    <div class="form-shell reveal">
+      <div class="form-top">
+        <span class="eyebrow">Start here</span>
+        <h2>Tell us what you need</h2>
+        <p>About three minutes. Answer what's relevant, and the right person will reach out within two business days.</p>
+      </div>
+
+      <form id="intakeForm" novalidate>
+
+        <!-- 0. PATHWAY -->
+        <fieldset>
+          <legend>What brings you in? <span class="req">*</span></legend>
+          <div class="pathways" id="pathways">
+            <label class="pathway">
+              <input type="radio" name="pathway" value="Training & Upskilling" />
+              <strong>Train my team</strong>
+              <span>Upskill the workforce I already have</span>
+            </label>
+            <label class="pathway teal">
+              <input type="radio" name="pathway" value="Hiring, Internships & Apprenticeships" />
+              <strong>Build my team</strong>
+              <span>Hire, host interns, or start an apprenticeship</span>
+            </label>
+            <label class="pathway steel hidden" id="teachPathway">
+              <input type="radio" name="pathway" value="Teach With Us" />
+              <strong>Teach with us</strong>
+              <span>Join our subject-matter expert roster</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- 1. CONTACT -->
+        <fieldset>
+          <legend>About you</legend>
+          <div class="grid3">
+            <div class="field">
+              <label for="contact_name">Your name <span class="req">*</span></label>
+              <input type="text" id="contact_name" name="contact_name" required autocomplete="name" />
+            </div>
+            <div class="field">
+              <label for="email">Email <span class="req">*</span></label>
+              <input type="email" id="email" name="email" required autocomplete="email" />
+            </div>
+            <div class="field">
+              <label for="phone">Phone</label>
+              <input type="tel" id="phone" name="phone" autocomplete="tel" />
+            </div>
+          </div>
+          <div class="org-only" id="orgBlock">
+            <div class="grid3">
+              <div class="field">
+                <label for="org_name">Organization <span class="req">*</span></label>
+                <input type="text" id="org_name" name="org_name" autocomplete="organization" />
+              </div>
+              <div class="field">
+                <label for="sector">Industry / sector</label>
+                <select id="sector" name="sector">
+                  <option value="">Select…</option>
+                  <option>Aerospace &amp; Advanced Manufacturing</option>
+                  <option>Trade, Logistics &amp; Supply Chain (Port)</option>
+                  <option>Healthcare &amp; Life Sciences</option>
+                  <option>IT, Software &amp; Data</option>
+                  <option>Energy, Sustainability &amp; Clean Tech</option>
+                  <option>Construction &amp; Skilled Trades</option>
+                  <option>Hospitality, Retail &amp; Tourism</option>
+                  <option>Professional &amp; Business Services</option>
+                  <option>Public Sector / Government</option>
+                  <option>Nonprofit / Community Organization</option>
+                  <option>Education</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="company_size">Company size</label>
+                <select id="company_size" name="company_size">
+                  <option value="">Select…</option>
+                  <option>1–10 employees</option>
+                  <option>11–50</option>
+                  <option>51–200</option>
+                  <option>201–500</option>
+                  <option>500+</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- BRANCH: TRAINING -->
+        <fieldset class="branch" id="branch-training">
+          <legend>Your training need</legend>
+          <p class="legend-sub">A rough sketch is plenty — we'll shape it together on the call.</p>
+          <div class="field">
+            <label>Which areas interest you? <span class="help">(check any)</span></label>
+            <div class="checks">
+              <label class="check"><input type="checkbox" name="topics" value="Business communication & leadership" /> Business communication &amp; leadership</label>
+              <label class="check"><input type="checkbox" name="topics" value="Supply chain & logistics" /> Supply chain &amp; logistics</label>
+              <label class="check"><input type="checkbox" name="topics" value="AI & emerging technology" /> AI &amp; emerging technology</label>
+              <label class="check"><input type="checkbox" name="topics" value="Computer applications & digital skills" /> Computer applications &amp; digital skills</label>
+              <label class="check"><input type="checkbox" name="topics" value="Customer service" /> Customer service &amp; frontline excellence</label>
+              <label class="check"><input type="checkbox" name="topics" value="Something else / custom" /> Something else / custom</label>
+            </div>
+          </div>
+          <div class="grid3">
+            <div class="field">
+              <label for="participants">Roughly how many people?</label>
+              <select id="participants" name="participants">
+                <option value="">Select…</option>
+                <option>1–10</option><option>11–25</option><option>26–50</option><option>51–100</option><option>100+</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="format">Preferred format</label>
+              <select id="format" name="format">
+                <option value="">Select…</option>
+                <option>On-site at our workplace</option>
+                <option>On the LBCC campus</option>
+                <option>Live online</option>
+                <option>Hybrid</option>
+                <option>Not sure — advise us</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="timeline">How soon?</label>
+              <select id="timeline" name="timeline">
+                <option value="">Select…</option>
+                <option>As soon as possible</option>
+                <option>This quarter</option>
+                <option>Next 3–6 months</option>
+                <option>Just exploring</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="skill_gap">In your own words, what's the gap you're trying to close?</label>
+            <textarea id="skill_gap" name="skill_gap" placeholder="What would change for your business if this were solved?"></textarea>
+          </div>
+        </fieldset>
+
+        <!-- BRANCH: PLACEMENT -->
+        <fieldset class="branch" id="branch-placement">
+          <legend>Your talent need</legend>
+          <p class="legend-sub">Tell us who you're looking for and how you'd like to bring them on.</p>
+          <div class="field">
+            <label>I'm interested in… <span class="help">(check any)</span></label>
+            <div class="checks">
+              <label class="check"><input type="checkbox" name="talent_interest" value="Hiring for open roles" /> Hiring for open roles</label>
+              <label class="check"><input type="checkbox" name="talent_interest" value="Hosting interns" /> Hosting interns</label>
+              <label class="check"><input type="checkbox" name="talent_interest" value="Starting an apprenticeship" /> Starting an apprenticeship</label>
+              <label class="check"><input type="checkbox" name="talent_interest" value="Recruiting events / job fairs" /> Recruiting events / job fairs</label>
+            </div>
+          </div>
+          <div class="grid2">
+            <div class="field">
+              <label for="roles_needed">What roles or skills are you looking for?</label>
+              <input type="text" id="roles_needed" name="roles_needed" placeholder="e.g., logistics coordinators, welders, office staff" />
+            </div>
+            <div class="field">
+              <label for="positions">Roughly how many positions?</label>
+              <select id="positions" name="positions">
+                <option value="">Select…</option>
+                <option>1–2</option><option>3–5</option><option>6–15</option><option>15+</option><option>Ongoing need</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="talent_notes">Anything else about your hiring goals?</label>
+            <textarea id="talent_notes" name="talent_notes"></textarea>
+          </div>
+        </fieldset>
+
+        <!-- BRANCH: TEACH -->
+        <fieldset class="branch" id="branch-teach">
+          <legend>Your expertise</legend>
+          <p class="legend-sub">Join the roster — we'll reach out when a program matches what you know.</p>
+          <div class="grid2">
+            <div class="field">
+              <label for="expertise">What could you teach? <span class="req">*</span></label>
+              <input type="text" id="expertise" name="expertise" placeholder="e.g., supply chain operations, project management, AI tools" />
+            </div>
+            <div class="field">
+              <label for="experience_years">Years of industry experience</label>
+              <select id="experience_years" name="experience_years">
+                <option value="">Select…</option>
+                <option>3–5</option><option>6–10</option><option>11–20</option><option>20+</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid2">
+            <div class="field">
+              <label for="availability">Availability</label>
+              <select id="availability" name="availability">
+                <option value="">Select…</option>
+                <option>Weekdays</option><option>Evenings</option><option>Weekends</option><option>Flexible</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="profile_link">LinkedIn or resume link <span class="help">(optional)</span></label>
+              <input type="url" id="profile_link" name="profile_link" placeholder="https://" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="teach_notes">Anything else we should know?</label>
+            <textarea id="teach_notes" name="teach_notes"></textarea>
+          </div>
+        </fieldset>
+
+        <div class="form-actions">
+          <button type="submit" class="submit-btn" id="submitBtn">Send to Workforce Development</button>
+          <p class="privacy">Your responses go only to LBCC's Workforce Development team, so the right person can follow up with you.</p>
+        </div>
+        <div class="formmsg" id="formMsg" role="status" aria-live="polite"></div>
+      </form>
+
+      <div class="success-screen" id="successScreen">
+        <div class="ic">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <h2>You're in. We've got it from here.</h2>
+        <p id="successCopy">Your inquiry is on its way to the team member who owns your service area — expect a real response within two business days.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <h4>LBCC Workforce &amp; Economic Development</h4>
+        <p>One front door for employers across Long Beach and the harbor region — training for the team you have, and talent for the team you're building.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <div class="foot-links">
+          <a href="training.html">Training &amp; upskilling</a>
+          <a href="hiring.html">Hiring &amp; talent</a>
+          <a href="index.html#intake">Start an inquiry</a>
+        </div>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <div class="foot-links">
+          <!-- TODO: confirm public WFD contact line before launch -->
+          <a href="mailto:vcalip@lbcc.edu">vcalip@lbcc.edu</a>
+          <a href="https://www.lbcc.edu/workforce-development" target="_blank" rel="noopener">lbcc.edu/workforce-development</a>
+          <a href="teach.html">Teach with us / Careers</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="yr"></span> Long Beach City College. All rights reserved.</span>
+      <span>An equal-opportunity institution.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  /* ---------- entrance: scroll-driven, remembers returning visitors ---------- */
+  (function(){
+    var stage = document.getElementById('entrance');
+    var body = document.body;
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var seen = false;
+    try { seen = sessionStorage.getItem('lbcc_entered') === '1'; } catch(e){}
+    /* arriving with a deep link or preselected pathway skips the intro */
+    var deepLink = location.hash || new URLSearchParams(location.search).get('path');
+
+    if (reduce){ body.classList.add('entered'); return; }
+    if (seen || deepLink){ body.classList.add('entered','returning'); return; }
+
+    var ease = function(t){ return t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2; };
+    var ticking = false;
+    function update(){
+      ticking = false;
+      var rect = stage.getBoundingClientRect();
+      var total = stage.offsetHeight - window.innerHeight;
+      var scrolled = Math.min(Math.max(-rect.top, 0), total);
+      var p = total > 0 ? scrolled / total : 1;
+      stage.style.setProperty('--open', ease(Math.min(p / 0.6, 1)).toFixed(4));
+      stage.style.setProperty('--push', ease(Math.min(Math.max((p - 0.48) / 0.52, 0), 1)).toFixed(4));
+      if (p > 0.9 && !body.classList.contains('entered')){
+        body.classList.add('entered');
+        try { sessionStorage.setItem('lbcc_entered','1'); } catch(e){}
+      }
+    }
+    function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(update); } }
+    window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('resize', onScroll, {passive:true});
+    update();
+
+    document.getElementById('enterSkip').addEventListener('click', function(){
+      body.classList.add('entered');
+      try { sessionStorage.setItem('lbcc_entered','1'); } catch(e){}
+      document.getElementById('lobby').scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  })();
+
+  /* ---------- reveal on scroll ---------- */
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+    }, {threshold:.12});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+  }
+
+  /* ---------- checkbox visual state ---------- */
+  document.querySelectorAll('.check input').forEach(function(cb){
+    cb.addEventListener('change', function(){ this.closest('.check').classList.toggle('sel', this.checked); });
+  });
+
+  /* ---------- pathway branching ---------- */
+  var PATH_KEY = { 'Training & Upskilling':'training', 'Hiring, Internships & Apprenticeships':'placement', 'Teach With Us':'teach' };
+  var pathRadios = document.querySelectorAll('input[name="pathway"]');
+  var orgBlock = document.getElementById('orgBlock');
+
+  function setPath(value){
+    pathRadios.forEach(function(r){
+      r.checked = (r.value === value);
+      r.closest('.pathway').classList.toggle('on', r.checked);
+    });
+    var key = PATH_KEY[value];
+    document.querySelectorAll('.branch').forEach(function(b){
+      b.classList.toggle('on', b.id === 'branch-' + key);
+    });
+    orgBlock.classList.toggle('on', key !== 'teach');
+  }
+  pathRadios.forEach(function(r){
+    r.addEventListener('change', function(){ if(this.checked) setPath(this.value); });
+  });
+
+  /* subpages arrive with ?path=training|placement|teach — preselect and jump to the form */
+  (function(){
+    var p = new URLSearchParams(location.search).get('path');
+    if (!p) return;
+    var map = { training:'Training & Upskilling', placement:'Hiring, Internships & Apprenticeships', teach:'Teach With Us' };
+    if (!map[p]) return;
+    if (p === 'teach') document.getElementById('teachPathway').classList.remove('hidden');
+    setPath(map[p]);
+    setTimeout(function(){
+      document.getElementById('intake').scrollIntoView({behavior:'auto', block:'start'});
+    }, 60);
+  })();
+
+  /* ---------- collection + submission ---------- */
+  var FIELDS = [
+    'pathway','contact_name','email','phone','org_name','sector','company_size',
+    'topics','participants','format','timeline','skill_gap',
+    'talent_interest','roles_needed','positions','talent_notes',
+    'expertise','experience_years','availability','profile_link','teach_notes'
+  ];
+  function collect(form){
+    var data = {};
+    FIELDS.forEach(function(name){
+      var nodes = form.querySelectorAll('[name="'+name+'"]');
+      if (!nodes.length){ data[name]=''; return; }
+      var type = nodes[0].type;
+      if (type === 'checkbox'){
+        data[name] = Array.from(nodes).filter(function(n){return n.checked;}).map(function(n){return n.value;});
+      } else if (type === 'radio'){
+        var sel = Array.from(nodes).find(function(n){return n.checked;});
+        data[name] = sel ? sel.value : '';
+      } else {
+        data[name] = nodes[0].value.trim();
+      }
+    });
+    data.submitted_at = new Date().toISOString();
+    data.page = location.href;
+    return data;
+  }
+  async function send(data){
+    var cfg = window.LBCC_CONFIG || {};
+    if (!cfg.endpoint){ return {ok:true, demo:true}; }
+    if (cfg.mode === 'formspree'){
+      var res = await fetch(cfg.endpoint, {method:'POST',
+        headers:{'Accept':'application/json','Content-Type':'application/json'},
+        body: JSON.stringify(data)});
+      return {ok: res.ok};
+    }
+    await fetch(cfg.endpoint, {method:'POST', mode:'no-cors',
+      headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(data)});
+    return {ok:true};
+  }
+
+  var form = document.getElementById('intakeForm');
+  var msg = document.getElementById('formMsg');
+  var btn = document.getElementById('submitBtn');
+
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    msg.className = 'formmsg';
+
+    var pathSel = Array.from(pathRadios).find(function(r){ return r.checked; });
+    if (!pathSel){
+      msg.className = 'formmsg err';
+      msg.textContent = 'Please choose what brings you in — training your team or building it.';
+      document.getElementById('pathways').scrollIntoView({behavior:'smooth', block:'center'});
+      return;
+    }
+    var key = PATH_KEY[pathSel.value];
+
+    var required = ['contact_name','email'];
+    if (key !== 'teach') required.push('org_name');
+    if (key === 'teach') required.push('expertise');
+
+    var firstBad = null;
+    required.forEach(function(id){
+      var el = document.getElementById(id);
+      if (!el.value.trim()){ el.style.borderColor = '#C0392B'; if(!firstBad) firstBad = el; }
+      else { el.style.borderColor = ''; }
+    });
+    var emailEl = document.getElementById('email');
+    if (emailEl.value && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(emailEl.value)){
+      emailEl.style.borderColor = '#C0392B'; if(!firstBad) firstBad = emailEl;
+    }
+    if (firstBad){
+      msg.className = 'formmsg err';
+      msg.textContent = 'Please fill in the required fields marked with *.';
+      firstBad.focus();
+      return;
+    }
+
+    btn.disabled = true;
+    var original = btn.textContent;
+    btn.textContent = 'Sending…';
+    try {
+      var result = await send(collect(form));
+      if (result.demo){
+        msg.className = 'formmsg demo';
+        msg.innerHTML = '<strong>Demo mode.</strong> No endpoint is configured yet, so nothing was saved. Add your Google Apps Script or Formspree URL to <code>LBCC_CONFIG.endpoint</code> at the top of the file to go live.';
+        btn.disabled = false; btn.textContent = original;
+        return;
+      }
+      if (result.ok){
+        if (key === 'teach'){
+          document.getElementById('successCopy').textContent =
+            "You're on the roster. When a program matches your expertise, our team will reach out to talk scope, schedule, and compensation.";
+        }
+        form.style.display = 'none';
+        var sc = document.getElementById('successScreen');
+        sc.classList.add('show');
+        sc.scrollIntoView({behavior:'smooth', block:'center'});
+      } else { throw new Error('Request failed'); }
+    } catch(err){
+      msg.className = 'formmsg err';
+      msg.textContent = 'Something went wrong sending your information. Please try again, or email us directly at vcalip@lbcc.edu.';
+      btn.disabled = false; btn.textContent = original;
+    }
+  });
+</script>
+</body>
+</html>

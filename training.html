@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Training &amp; Upskilling | LBCC Workforce Development</title>
+<meta name="description" content="Short, customized workshops for working teams — business communication, supply chain, AI, digital skills, and custom programs from Long Beach City College." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+/* ===== shared styles (inlined for standalone viewing) ===== */
+/* LBCC Workforce Development — shared styles (all pages) */
+:root{
+  --navy:#003366; --ink:#0B1F33; --gold:#FFB81C; --gold-deep:#E0A012;
+  --teal:#0F6E56; --teal-deep:#0A5240; --steel:#5F6B76;
+  --cream:#FAFAF7; --paper:#ffffff; --slate:#5A6B7B; --line:#E4E2DA;
+  --shadow:0 1px 2px rgba(11,31,51,.06), 0 8px 24px rgba(11,31,51,.08);
+  --r:14px; --maxw:1140px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{margin:0;font-family:"Inter",system-ui,-apple-system,sans-serif;color:var(--ink);
+  background:var(--cream);line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:"Space Grotesk",sans-serif;line-height:1.12;letter-spacing:-.02em;margin:0}
+p{margin:0}
+a{color:var(--navy)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.eyebrow{font-size:.76rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--slate)}
+.eyebrow.gold{color:var(--gold-deep)}
+.eyebrow.teal{color:var(--teal)}
+
+.skip-to-content{position:absolute;left:-9999px;top:0;z-index:200;background:var(--navy);color:#fff;
+  padding:12px 18px;border-radius:0 0 10px 0;font-weight:600;text-decoration:none}
+.skip-to-content:focus{left:0}
+
+/* top bar */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:60;background:rgba(250,250,247,.88);
+  backdrop-filter:saturate(180%) blur(10px);border-bottom:1px solid var(--line);transition:transform .45s ease}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:14px}
+.brand{display:flex;align-items:center;gap:11px;font-family:"Space Grotesk";font-weight:700;
+  color:var(--navy);text-decoration:none;font-size:1rem;min-width:0}
+.brand .mark{width:34px;height:34px;border-radius:9px;flex:0 0 auto;background:var(--navy);color:var(--gold);
+  display:grid;place-items:center;font-weight:700;font-size:.95rem}
+.brand small{display:block;font-family:"Inter";font-weight:500;color:var(--slate);font-size:.7rem}
+.topnav{display:flex;align-items:center;gap:20px}
+.topnav a{font-weight:600;font-size:.9rem;text-decoration:none;color:var(--ink);white-space:nowrap}
+.topnav a:hover{color:var(--navy)}
+.nav-cta{background:var(--gold);color:var(--ink)!important;padding:10px 18px;border-radius:999px;
+  transition:transform .15s ease, box-shadow .15s ease}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(224,160,18,.4)}
+@media (max-width:760px){ .topnav a:not(.nav-cta){display:none} }
+
+/* buttons */
+.btn{font-family:"Inter";font-weight:600;font-size:1rem;text-decoration:none;cursor:pointer;border:0;
+  padding:14px 28px;border-radius:999px;display:inline-flex;align-items:center;gap:9px;
+  transition:transform .15s ease, box-shadow .15s ease}
+.btn-gold{background:var(--gold);color:var(--ink)}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(255,184,28,.38)}
+.btn-teal{background:var(--teal);color:#fff}
+.btn-teal:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(15,110,86,.38)}
+.btn-line{background:transparent;color:var(--navy);border:1.5px solid var(--navy)}
+.btn-line:hover{background:rgba(0,51,102,.06)}
+.micro{font-size:.86rem;color:var(--slate)}
+.cta-row{margin-top:30px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+
+/* sections */
+section{padding:76px 0}
+.section-head{max-width:62ch;margin-bottom:38px}
+.section-head h2{font-size:clamp(1.65rem,3vw,2.3rem);color:var(--navy);margin:10px 0 0}
+.section-head p{margin-top:13px;color:var(--slate);font-size:1.04rem}
+
+/* promise strip */
+.promise{background:var(--navy);color:#fff}
+.promise .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.pitem{padding:24px 22px;border-left:1px solid rgba(255,255,255,.12)}
+.pitem:first-child{border-left:0}
+.pitem h4{font-size:1rem;color:var(--gold);margin-bottom:5px}
+.pitem p{font-size:.88rem;color:#c4d0db}
+@media (max-width:900px){ .promise .wrap{grid-template-columns:1fr 1fr} .pitem:nth-child(3){border-left:0} }
+@media (max-width:560px){ .promise .wrap{grid-template-columns:1fr} .pitem{border-left:0;border-top:1px solid rgba(255,255,255,.12)} .pitem:first-child{border-top:0} }
+
+/* cards */
+.cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.cat{position:relative;background:var(--cream);border:1px solid var(--line);border-radius:var(--r);
+  padding:22px 20px;display:flex;flex-direction:column;gap:8px;transition:transform .16s ease, box-shadow .16s ease}
+.cat:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.cat h3{font-size:1.08rem;color:var(--navy)}
+.cat p{font-size:.92rem;color:var(--slate);flex:1}
+.cat .sessions{font-size:.82rem;color:var(--ink);font-weight:600}
+.ready{position:absolute;top:14px;right:14px;background:#EAF6EF;color:var(--teal);border:1px solid #BFE3CD;
+  font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:999px}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.svc{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:24px 22px;
+  display:flex;flex-direction:column;gap:9px;transition:transform .16s ease, box-shadow .16s ease}
+.svc:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.svc .ic{width:42px;height:42px;border-radius:11px;background:#E8F3EF;color:var(--teal);
+  display:grid;place-items:center;font-size:1.2rem}
+.svc h3{font-size:1.1rem;color:var(--navy)}
+.svc p{font-size:.93rem;color:var(--slate);flex:1}
+.fmt-line{margin-top:26px;padding:16px 20px;border-left:3px solid var(--gold);background:#FFFCF3;
+  border-radius:0 10px 10px 0;font-size:.95rem}
+
+/* process + people */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.step{padding:24px 20px;border:1px solid var(--line);border-radius:var(--r);background:var(--cream)}
+.step .stepnum{font-family:"Space Grotesk";font-weight:700;font-size:1.4rem;color:var(--gold-deep)}
+.step h3{font-size:1.06rem;color:var(--navy);margin:8px 0 7px}
+.step p{font-size:.92rem;color:var(--slate)}
+.sla{margin-top:26px;text-align:center;font-family:"Space Grotesk";font-weight:600;font-size:1.12rem;color:var(--navy)}
+.sla b{color:var(--teal)}
+.people-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.person{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:22px;display:flex;gap:15px;align-items:flex-start}
+.person .avatar{width:52px;height:52px;border-radius:50%;flex:0 0 auto;display:grid;place-items:center;
+  font-family:"Space Grotesk";font-weight:700;font-size:1.05rem;color:#fff}
+.person h3{font-size:1.02rem;color:var(--navy)}
+.person .role{font-size:.82rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin:2px 0 6px}
+.person p{font-size:.9rem;color:var(--slate)}
+
+/* subpage hero band */
+.pagehero{background:var(--ink);color:#fff;padding:110px 0 56px;position:relative;overflow:hidden}
+.pagehero::before{content:"";position:absolute;inset:0;opacity:.5;
+  background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+  background-size:46px 46px;
+  -webkit-mask-image:radial-gradient(ellipse 90% 90% at 50% 0%,#000,transparent);
+          mask-image:radial-gradient(ellipse 90% 90% at 50% 0%,#000,transparent)}
+.pagehero .wrap{position:relative}
+.pagehero h1{color:#fff;font-size:clamp(1.8rem,3.8vw,2.7rem);max-width:24ch;margin-top:12px}
+.pagehero p{color:#cdd6df;margin-top:14px;max-width:56ch;font-size:1.06rem}
+.pagehero .crumb{font-size:.86rem;color:#9fb0be;text-decoration:none;display:inline-flex;gap:6px;align-items:center}
+.pagehero .crumb:hover{color:#fff}
+.accent-gold{border-top:8px solid var(--gold)}
+.accent-teal{border-top:8px solid var(--teal)}
+.accent-steel{border-top:8px solid var(--steel)}
+
+/* form */
+.form-section{background:var(--cream)}
+.form-shell{background:var(--paper);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);overflow:hidden}
+.form-top{background:var(--navy);color:#fff;padding:30px 34px}
+.form-top .eyebrow{color:var(--gold)}
+.form-top h2{color:#fff;font-size:1.65rem;margin:8px 0 6px}
+.form-top p{color:#c4d0db;font-size:.97rem;max-width:62ch}
+form{padding:34px}
+fieldset{border:0;margin:0 0 8px;padding:0 0 28px;border-bottom:1px solid var(--line)}
+fieldset:last-of-type{border-bottom:0;padding-bottom:6px}
+legend{font-family:"Space Grotesk";font-weight:600;font-size:1.14rem;color:var(--navy);margin-bottom:4px}
+.legend-sub{color:var(--slate);font-size:.92rem;margin:2px 0 18px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+.field{display:flex;flex-direction:column;gap:7px;margin-bottom:18px}
+.field:last-child{margin-bottom:0}
+label{font-weight:600;font-size:.92rem}
+label .req{color:#C0392B;font-weight:700}
+input[type=text],input[type=email],input[type=tel],input[type=url],select,textarea{
+  font-family:"Inter";font-size:.98rem;color:var(--ink);background:#fff;border:1.5px solid var(--line);
+  border-radius:10px;padding:12px 14px;width:100%;transition:border-color .15s ease, box-shadow .15s ease}
+input:focus,select:focus,textarea:focus{outline:0;border-color:var(--navy);box-shadow:0 0 0 3px rgba(0,51,102,.12)}
+textarea{resize:vertical;min-height:90px}
+.help{font-size:.82rem;color:var(--slate);font-weight:400}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.check{display:flex;align-items:flex-start;gap:10px;border:1.5px solid var(--line);border-radius:10px;
+  padding:11px 13px;cursor:pointer;font-size:.92rem;transition:border-color .14s ease, background .14s ease;user-select:none}
+.check:hover{border-color:#c9c6ba;background:#fcfbf7}
+.check input{margin-top:2px;accent-color:var(--navy);width:17px;height:17px;flex:0 0 auto}
+.check.sel{border-color:var(--navy);background:#F3F7FB}
+.pathways{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pathway{--accent:var(--gold);--accent-soft:#FFF4D6;position:relative;border:2px solid var(--line);border-radius:14px;
+  padding:18px 16px;cursor:pointer;display:flex;flex-direction:column;gap:5px;transition:all .15s ease;user-select:none}
+.pathway.teal{--accent:var(--teal);--accent-soft:#E8F3EF}
+.pathway.steel{--accent:var(--steel);--accent-soft:#EEF1F4}
+.pathway input{position:absolute;opacity:0;pointer-events:none}
+.pathway strong{font-family:"Space Grotesk";font-size:1rem;color:var(--navy)}
+.pathway span{font-size:.83rem;color:var(--slate)}
+.pathway:hover{border-color:var(--accent)}
+.pathway.on{border-color:var(--accent);background:var(--accent-soft);box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent)}
+.pathway:has(input:focus-visible){outline:3px solid var(--accent);outline-offset:2px}
+.pathway.hidden{display:none}
+.branch{display:none}
+.branch.on{display:block}
+.org-only{display:none}
+.org-only.on{display:block}
+.form-actions{margin-top:30px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.submit-btn{font-family:"Inter";font-weight:600;font-size:1.04rem;border:0;cursor:pointer;
+  background:var(--gold);color:var(--ink);padding:15px 34px;border-radius:999px;
+  transition:transform .15s ease, box-shadow .15s ease}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(255,184,28,.4)}
+.submit-btn:disabled{opacity:.6;cursor:wait;transform:none;box-shadow:none}
+.privacy{font-size:.84rem;color:var(--slate);max-width:46ch}
+.formmsg{display:none;padding:18px 20px;border-radius:12px;margin-top:20px;font-size:.96rem}
+.formmsg.ok{display:block;background:#EAF6EF;border:1px solid #BFE3CD;color:#1d6b43}
+.formmsg.err{display:block;background:#FCEDEC;border:1px solid #F2C7C3;color:#9B2C22}
+.formmsg.demo{display:block;background:#FFF7E2;border:1px solid #F3DFA6;color:#8a6400}
+.success-screen{display:none;padding:58px 34px;text-align:center}
+.success-screen.show{display:block}
+.success-screen .ic{width:64px;height:64px;border-radius:50%;background:#EAF6EF;color:var(--teal);
+  display:grid;place-items:center;margin:0 auto 18px}
+.success-screen h2{color:var(--navy);font-size:1.65rem}
+.success-screen p{color:var(--slate);margin-top:12px;max-width:50ch;margin-left:auto;margin-right:auto}
+@media (max-width:720px){ .pathways{grid-template-columns:1fr} }
+@media (max-width:620px){ .checks{grid-template-columns:1fr} .grid2,.grid3{grid-template-columns:1fr} form{padding:24px 20px} .form-top{padding:24px 22px} }
+
+/* footer */
+footer{background:var(--navy);color:#cdd6df;padding:52px 0 36px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
+footer h4{color:#fff;font-size:1.02rem;margin:0 0 13px}
+footer a{color:#cdd6df;text-decoration:none}
+footer a:hover{color:var(--gold)}
+.foot-links{display:grid;gap:9px;font-size:.94rem}
+.foot-brand p{font-size:.93rem;margin-top:11px;color:#aeb9c4;max-width:42ch}
+.foot-bottom{border-top:1px solid rgba(255,255,255,.12);margin-top:34px;padding-top:22px;font-size:.84rem;
+  color:#92a0ad;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+@media (max-width:760px){ .foot-grid{grid-template-columns:1fr} }
+
+/* reveal + responsive */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+@media (max-width:900px){ .cat-grid,.svc-grid,.people-grid,.steps{grid-template-columns:1fr 1fr} }
+@media (max-width:620px){ .cat-grid,.svc-grid,.people-grid,.steps{grid-template-columns:1fr} section{padding:58px 0} }
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none;transition:none}
+  .btn,.cat,.svc,.nav-cta,.submit-btn{transition:none}
+}
+
+</style>
+</head>
+<body class="entered">
+
+<a class="skip-to-content" href="#main">Skip to main content</a>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <span class="mark">LB</span>
+      <span>Long Beach City College<small>Workforce &amp; Economic Development</small></span>
+    </a>
+    <nav class="topnav" aria-label="Primary">
+      <a href="training.html" aria-current="page">Training &amp; upskilling</a>
+      <a href="hiring.html">Hiring &amp; talent</a>
+      <a class="nav-cta" href="index.html?path=training#intake">Request training</a>
+    </nav>
+  </div>
+</header>
+
+<div class="pagehero accent-gold" id="main">
+  <div class="wrap">
+    <a class="crumb" href="index.html">&larr; Workforce Development home</a>
+    <span class="eyebrow gold" style="display:block;margin-top:18px">Training &amp; Upskilling</span>
+    <h1>Train the team you have</h1>
+    <p>Short, customized workshops that close skill gaps in your current workforce — delivered at your site, on our campus, or live online. Browse the areas below, then tell us what your team needs.</p>
+  </div>
+</div>
+
+<section style="background:var(--paper);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>Areas we teach</h2>
+      <p>Every area below can be scoped to a two-hour workshop, a half-day session, or a multi-week series — whatever fits your operation.</p>
+    </div>
+
+    <div class="cat-grid">
+      <div class="cat reveal">
+        <h3>Business Communication &amp; Leadership</h3>
+        <p>Writing, presenting, client-facing skills, and new-supervisor development for frontline leads and managers.</p>
+        <span class="sessions">2-hour to multi-session</span>
+      </div>
+      <div class="cat reveal">
+        <span class="ready">Ready now</span>
+        <h3>Supply Chain &amp; Logistics</h3>
+        <p>Operations, goods movement, and port-adjacent skills — built with our Port of Long Beach partnership and a standing instructor bench.</p>
+        <span class="sessions">Workshop to series</span>
+      </div>
+      <div class="cat reveal">
+        <span class="ready">Ready now</span>
+        <h3>AI &amp; Emerging Technology</h3>
+        <p>Practical, no-hype sessions: workplace AI foundations, prompt literacy, evaluating AI output, and building your team's AI use policy.</p>
+        <span class="sessions">2-hour to half-day modules</span>
+      </div>
+      <div class="cat reveal">
+        <h3>Computer Applications &amp; Digital Skills</h3>
+        <p>Microsoft 365, Excel, and the everyday digital fluency that makes the rest of the workday faster.</p>
+        <span class="sessions">2-hour to multi-session</span>
+      </div>
+      <div class="cat reveal">
+        <h3>Customer Service &amp; Frontline Excellence</h3>
+        <p>Service standards, de-escalation, and the habits that keep customers coming back.</p>
+        <span class="sessions">2-hour to half-day</span>
+      </div>
+      <div class="cat reveal">
+        <h3>Your Industry, Your Topic</h3>
+        <p>Don't see it here? We build custom programs across LBCC's career and technical programs — tell us the gap and we'll design for it.</p>
+        <span class="sessions">Scoped with you</span>
+      </div>
+    </div>
+
+    <div class="fmt-line reveal">
+      <strong>Short by design.</strong> Employers told us the magic words are "this only takes two hours of my staff's time." Sessions are compartmentalized so you can plug them into real workweeks — and stack them into a track when you're ready for more.
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow gold">How a program comes together</span>
+      <h2>From "we have a gap" to your team's first session</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><div class="stepnum">1</div><h3>Tell us the gap</h3><p>Three minutes in the intake form — your topic areas, headcount, format, and timing.</p></div>
+      <div class="step reveal"><div class="stepnum">2</div><h3>Scope it together</h3><p>Our training lead calls within two business days to shape content, schedule, cost, and funding options — including ETP / WIOA offsets.</p></div>
+      <div class="step reveal"><div class="stepnum">3</div><h3>We deliver</h3><p>At your workplace, on the LBCC campus, or live online — with certificates of completion available for your team.</p></div>
+    </div>
+    <div class="cta-row reveal" style="justify-content:center">
+      <a class="btn btn-gold" href="index.html?path=training#intake">Request training for my team</a>
+      <span class="micro">Takes about 3 minutes · No commitment</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <h4>LBCC Workforce &amp; Economic Development</h4>
+        <p>One front door for employers across Long Beach and the harbor region — training for the team you have, and talent for the team you're building.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <div class="foot-links">
+          <a href="training.html">Training &amp; upskilling</a>
+          <a href="hiring.html">Hiring &amp; talent</a>
+          <a href="index.html#intake">Start an inquiry</a>
+        </div>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <div class="foot-links">
+          <a href="mailto:vcalip@lbcc.edu">vcalip@lbcc.edu</a>
+          <a href="https://www.lbcc.edu/workforce-development" target="_blank" rel="noopener">lbcc.edu/workforce-development</a>
+          <a href="teach.html">Teach with us / Careers</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="yr"></span> Long Beach City College. All rights reserved.</span>
+      <span>An equal-opportunity institution.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+    }, {threshold:.12});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+  }
+</script>
+</body>
+</html>
