@@ -241,6 +241,8 @@ footer a:hover{color:var(--gold)}
   .brand .marklogo{height:40px;width:auto;flex:0 0 auto}
   .brand .brandname{color:#E00000}
   .brand .brandname small{color:var(--navy)}
+  .pathways{grid-template-columns:1fr 1fr 1fr}
+  @media (max-width:720px){ .pathways{grid-template-columns:1fr} }
 
 
   /* ================= LOBBY (overview hero) ================= */
@@ -268,7 +270,10 @@ footer a:hover{color:var(--gold)}
   .people-grid.vertical{grid-template-columns:1fr;gap:14px}
   @media (max-width:860px){ .split{grid-template-columns:1fr;gap:28px} }
 
-  .pathcards{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:880px;margin:48px auto 0;text-align:left}
+  .pathcards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1080px;margin:48px auto 0;text-align:left}
+  .pathcard.navy{--accent:var(--navy);--accent-deep:#00254d}
+  .pathcard.navy .plate{color:#fff}
+  @media (max-width:900px){ .pathcards{grid-template-columns:1fr;max-width:560px} }
   .pathcard{--accent:var(--gold);--accent-deep:var(--gold-deep);
     position:relative;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:var(--ink);
     background:linear-gradient(180deg,#f6f8fa,#e9edf1);border-radius:16px;
@@ -308,6 +313,7 @@ footer a:hover{color:var(--gold)}
     <nav class="topnav" aria-label="Primary">
       <a href="training.html">Training &amp; upskilling</a>
       <a href="hiring.html">Hiring &amp; talent</a>
+      <a href="partner.html">Partner with us</a>
       <a class="nav-cta" href="#intake">Get started</a>
     </nav>
   </div>
@@ -336,6 +342,12 @@ footer a:hover{color:var(--gold)}
         <h2>Build the team you need</h2>
         <p>Hire job-ready talent, host interns, or launch an apprenticeship with students and graduates prepared for your roles.</p>
         <span class="go">Explore hiring &amp; talent</span>
+      </a>
+      <a class="pathcard navy" href="partner.html">
+        <span class="plate">Industry Partnership</span>
+        <h2>Shape what we teach next</h2>
+        <p>Join an advisory board, speak to our audiences, or co-design curriculum — put your industry expertise at the center of how Long Beach trains its workforce.</p>
+        <span class="go">Explore partnership</span>
       </a>
     </div>
   </div>
@@ -433,6 +445,11 @@ footer a:hover{color:var(--gold)}
               <input type="radio" name="pathway" value="Hiring, Internships & Apprenticeships" />
               <strong>Build my team</strong>
               <span>Hire, host interns, or start an apprenticeship</span>
+            </label>
+            <label class="pathway navy" style="--accent:var(--navy);--accent-soft:#E8EEF5">
+              <input type="radio" name="pathway" value="Industry Partnership & Expertise" />
+              <strong>Partner with us</strong>
+              <span>Advisory boards, speaking, curriculum input</span>
             </label>
             <label class="pathway steel hidden" id="teachPathway">
               <input type="radio" name="pathway" value="Teach With Us" />
@@ -581,6 +598,31 @@ footer a:hover{color:var(--gold)}
           </div>
         </fieldset>
 
+        <!-- BRANCH: PARTNER -->
+        <fieldset class="branch" id="branch-partner">
+          <legend>Your partnership interest</legend>
+          <p class="legend-sub">Tell us how you'd like to plug in — we'll bring the opportunities to you.</p>
+          <div class="field">
+            <label>I'm interested in… <span class="help">(check any)</span></label>
+            <div class="checks">
+              <label class="check"><input type="checkbox" name="partner_interest" value="Advisory board membership" /> Advisory board membership</label>
+              <label class="check"><input type="checkbox" name="partner_interest" value="Speaking engagements" /> Speaking engagements</label>
+              <label class="check"><input type="checkbox" name="partner_interest" value="Curriculum co-design" /> Curriculum co-design</label>
+              <label class="check"><input type="checkbox" name="partner_interest" value="Hosting site visits or tours" /> Hosting site visits or tours</label>
+              <label class="check"><input type="checkbox" name="partner_interest" value="Event sponsorship" /> Event sponsorship</label>
+              <label class="check"><input type="checkbox" name="partner_interest" value="Something else" /> Something else</label>
+            </div>
+          </div>
+          <div class="field">
+            <label for="expertise_area">Your industry / area of expertise</label>
+            <input type="text" id="expertise_area" name="expertise_area" placeholder="e.g., aerospace manufacturing, healthcare operations, logistics" />
+          </div>
+          <div class="field">
+            <label for="partner_notes">Anything else about how you'd like to partner?</label>
+            <textarea id="partner_notes" name="partner_notes"></textarea>
+          </div>
+        </fieldset>
+
         <!-- BRANCH: TEACH -->
         <fieldset class="branch" id="branch-teach">
           <legend>Your expertise</legend>
@@ -649,6 +691,7 @@ footer a:hover{color:var(--gold)}
         <div class="foot-links">
           <a href="training.html">Training &amp; upskilling</a>
           <a href="hiring.html">Hiring &amp; talent</a>
+          <a href="partner.html">Partner with us</a>
           <a href="index.html#intake">Start an inquiry</a>
         </div>
       </div>
@@ -689,7 +732,7 @@ footer a:hover{color:var(--gold)}
   });
 
   /* ---------- pathway branching ---------- */
-  var PATH_KEY = { 'Training & Upskilling':'training', 'Hiring, Internships & Apprenticeships':'placement', 'Teach With Us':'teach' };
+  var PATH_KEY = { 'Training & Upskilling':'training', 'Hiring, Internships & Apprenticeships':'placement', 'Industry Partnership & Expertise':'partner', 'Teach With Us':'teach' };
   var pathRadios = document.querySelectorAll('input[name="pathway"]');
   var orgBlock = document.getElementById('orgBlock');
 
@@ -712,7 +755,7 @@ footer a:hover{color:var(--gold)}
   (function(){
     var p = new URLSearchParams(location.search).get('path');
     if (!p) return;
-    var map = { training:'Training & Upskilling', placement:'Hiring, Internships & Apprenticeships', teach:'Teach With Us' };
+    var map = { training:'Training & Upskilling', placement:'Hiring, Internships & Apprenticeships', partner:'Industry Partnership & Expertise', teach:'Teach With Us' };
     if (!map[p]) return;
     if (p === 'teach') document.getElementById('teachPathway').classList.remove('hidden');
     setPath(map[p]);
@@ -726,6 +769,7 @@ footer a:hover{color:var(--gold)}
     'pathway','contact_name','email','phone','org_name','sector','company_size',
     'topics','participants','format','timeline','skill_gap',
     'talent_interest','roles_needed','positions','talent_notes',
+    'partner_interest','expertise_area','partner_notes',
     'expertise','experience_years','availability','profile_link','teach_notes'
   ];
   function collect(form){
