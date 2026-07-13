@@ -227,6 +227,14 @@ footer a:hover{color:var(--gold)}
 }
 
 </style>
+<style>
+/* hero background image with left-weighted contrast overlay */
+.pagehero{background-color:var(--ink);
+  background-image:linear-gradient(to right, rgba(11,31,51,.75), rgba(11,31,51,.45) 62%, rgba(11,31,51,.3)),
+                   url('hero-teach.jpg');
+  background-size:cover;background-position:center;background-repeat:no-repeat}
+.pagehero::before{content:none}
+</style>
 </head>
 <body class="entered">
 
