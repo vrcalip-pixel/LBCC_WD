@@ -433,7 +433,7 @@ footer a:hover{color:var(--gold)}
       <form id="intakeForm" novalidate>
 
         <!-- 0. PATHWAY -->
-        <fieldset>
+        <fieldset id="pathwayFieldset">
           <legend>What brings you in? <span class="req">*</span></legend>
           <div class="pathways" id="pathways">
             <label class="pathway">
@@ -757,7 +757,12 @@ footer a:hover{color:var(--gold)}
     if (!p) return;
     var map = { training:'Training & Upskilling', placement:'Hiring, Internships & Apprenticeships', partner:'Industry Partnership & Expertise', teach:'Teach With Us' };
     if (!map[p]) return;
-    if (p === 'teach') document.getElementById('teachPathway').classList.remove('hidden');
+    if (p === 'teach'){
+      /* teach arrivals already chose their path on teach.html — hide the picker,
+         keep the selection active behind the scenes for routing */
+      document.getElementById('teachPathway').classList.remove('hidden');
+      document.getElementById('pathwayFieldset').style.display = 'none';
+    }
     setPath(map[p]);
     setTimeout(function(){
       document.getElementById('intake').scrollIntoView({behavior:'auto', block:'start'});
