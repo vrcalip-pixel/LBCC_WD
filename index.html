@@ -246,13 +246,11 @@ footer a:hover{color:var(--gold)}
 
 
   /* ================= LOBBY (overview hero) ================= */
-  .lobby{position:relative;background:var(--ink);color:#fff;overflow:hidden}
-  .lobby::before{content:"";position:absolute;inset:0;opacity:.5;
-    background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),
-                     linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
-    background-size:46px 46px;
-    -webkit-mask-image:radial-gradient(ellipse 90% 80% at 50% 0%,#000,transparent);
-            mask-image:radial-gradient(ellipse 90% 80% at 50% 0%,#000,transparent)}
+  .lobby{position:relative;color:#fff;overflow:hidden;
+    background-color:var(--ink);
+    background-image:linear-gradient(rgba(8,18,30,.62), rgba(8,18,30,.5) 45%, rgba(11,31,51,.82)),
+                     url('images/hero-landing.jpg');
+    background-size:cover;background-position:center;background-repeat:no-repeat}
   .lobby .wrap{position:relative;padding:140px 24px 84px;text-align:center}
   .lobby h1{font-size:clamp(1.9rem,4.4vw,3.2rem);font-weight:700;color:#fff;max-width:22ch;margin:14px auto 0}
   .lobby .lede{margin:18px auto 0;font-size:1.1rem;color:#cdd6df;max-width:54ch}
